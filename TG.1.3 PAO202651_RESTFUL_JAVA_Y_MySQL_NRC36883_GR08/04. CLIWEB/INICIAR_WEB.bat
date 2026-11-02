@@ -3,8 +3,8 @@ chcp 65001 >nul
 title EurekaBank RESTful Java - Cliente Web JSP (GR08)
 
 set "TARGET_HOST=localhost:8080"
-if exist "%~dp0servidor_ip.txt" (
-    for /f "tokens=*" %%a in ('type "%~dp0servidor_ip.txt"') do (
+if exist "%~dp0..\servidor_ip.txt" (
+    for /f "tokens=*" %%a in ('type "%~dp0..\servidor_ip.txt"') do (
         set "TARGET_HOST=%%a"
     )
 )

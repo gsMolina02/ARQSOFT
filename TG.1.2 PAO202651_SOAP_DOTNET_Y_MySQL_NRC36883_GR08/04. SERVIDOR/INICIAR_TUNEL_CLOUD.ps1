@@ -1,20 +1,29 @@
 $ErrorActionPreference = "SilentlyContinue"
-$RootDir = $PSScriptRoot
+$RootDir = Split-Path -Parent $PSScriptRoot
 
 Write-Host "============================================================================" -ForegroundColor Cyan
-Write-Host "  EUREKABANK RESTFUL JAVA - PUENTE / TUNEL CLOUD (GRUPO 08)" -ForegroundColor Cyan
+Write-Host "  EUREKABANK SOAP .NET - PUENTE / TUNEL CLOUD (GRUPO 08)" -ForegroundColor Cyan
 Write-Host "============================================================================" -ForegroundColor Cyan
 Write-Host ""
 
-# 1. Verificar Payara
-$listening = Get-NetTCPConnection -LocalPort 8080 -State Listen -ErrorAction SilentlyContinue
-if (-not $listening) {
-    Write-Host "[AVISO] El servidor Payara 7 en puerto 8080 no parece estar activo." -ForegroundColor Yellow
-    Write-Host "        Por favor inicie primero: 0_INICIAR_SERVIDOR_REST.bat" -ForegroundColor Yellow
+# 1. Verificar Servidor SOAP (IIS Express 62278)
+$listeningSoap = Get-NetTCPConnection -LocalPort 62278 -State Listen -ErrorAction SilentlyContinue
+if (-not $listeningSoap) {
+    Write-Host "[AVISO] El servidor SOAP WCF en puerto 62278 no parece estar activo." -ForegroundColor Yellow
+    Write-Host "        Por favor inicie primero: INICIAR_SERVIDOR_SOAP.bat" -ForegroundColor Yellow
     Write-Host ""
 }
 
-# 2. Localizar binario de cloudflared
+# 2. Verificar o Iniciar Portal Web (Kestrel 5150)
+$listeningWeb = Get-NetTCPConnection -LocalPort 5150 -State Listen -ErrorAction SilentlyContinue
+if (-not $listeningWeb) {
+    Write-Host "[INFO] Iniciando servidor Web ASP.NET Core en puerto 5150..." -ForegroundColor Cyan
+    $webProj = Join-Path $RootDir "04. CLIWEB\CLIWEB_EuBank_SOAPDOTNET_GR08\CLIWEB_EuBank_SOAPDOTNET_GR08"
+    Start-Process "dotnet" -ArgumentList "run" -WorkingDirectory $webProj -WindowStyle Minimized
+    Start-Sleep -Seconds 4
+}
+
+# 3. Localizar binario de cloudflared
 $cloudflaredPath = "C:\Program Files (x86)\cloudflared\cloudflared.exe"
 if (-not (Test-Path $cloudflaredPath)) {
     $cloudflaredPath = (Get-Command "cloudflared.exe" -ErrorAction SilentlyContinue).Source
@@ -26,12 +35,12 @@ if (-not $cloudflaredPath -or -not (Test-Path $cloudflaredPath)) {
     exit 1
 }
 
-Write-Host "[1/3] Iniciando Tunel Cloudflare hacia http://localhost:8080..." -ForegroundColor Green
+Write-Host "[1/3] Iniciando Tunel Cloudflare hacia http://localhost:5150..." -ForegroundColor Green
 Write-Host "[2/3] Negociando conexion segura y generando enlace publico..." -ForegroundColor Yellow
 
 $psi = New-Object System.Diagnostics.ProcessStartInfo
 $psi.FileName = $cloudflaredPath
-$psi.Arguments = "tunnel --url http://localhost:8080"
+$psi.Arguments = "tunnel --url http://localhost:5150"
 $psi.UseShellExecute = $false
 $psi.RedirectStandardOutput = $true
 $psi.RedirectStandardError = $true
@@ -54,10 +63,11 @@ while (-not $process.HasExited -and -not $tunnelUrl) {
 }
 
 if ($tunnelUrl) {
-    $webUrl = "$tunnelUrl/RestClienteWeb/Login.jsp"
-    $restUrl = "$tunnelUrl/Rest_EurekaBank/webresources/coreBancario"
+    $webUrl = "$tunnelUrl/"
+    $loginSvcUrl = "$tunnelUrl/Services/LoginService.svc"
+    $movSvcUrl = "$tunnelUrl/Services/MovimientosService.svc"
 
-    # Actualizar configuraciones de clientes locales (servidor_ip.txt, etc.)
+    # Actualizar configuraciones de clientes locales (servidor_ip.txt, App.config, etc.)
     & "$RootDir\CONFIGURAR_IP_CLIENTES.ps1" -NuevaIP $tunnelUrl | Out-Null
 
     # Copiar al portapapeles y abrir en el navegador automáticamente
@@ -66,22 +76,23 @@ if ($tunnelUrl) {
 
     Write-Host ""
     Write-Host "============================================================================" -ForegroundColor Green
-    Write-Host "  ¡TUNEL Y CLIENTE WEB LISTOS Y EN LINEA!" -ForegroundColor Green
+    Write-Host "  ¡TUNEL Y CLIENTE WEB SOAP .NET LISTOS Y EN LINEA!" -ForegroundColor Green
     Write-Host "============================================================================" -ForegroundColor Green
     Write-Host ""
-    Write-Host "  [WEB] Cliente Web JSP en la nube: " -ForegroundColor Cyan
+    Write-Host "  [WEB] Portal Web ASP.NET Core en la nube: " -ForegroundColor Cyan
     Write-Host "        $webUrl" -ForegroundColor Yellow
     Write-Host "        (Se acaba de abrir en tu navegador y copiar a tu portapapeles)" -ForegroundColor Gray
     Write-Host ""
-    Write-Host "  [REST] Endpoint RESTful Java: " -ForegroundColor Cyan
-    Write-Host "        $restUrl" -ForegroundColor Yellow
+    Write-Host "  [SOAP] Servicios WCF disponibles: " -ForegroundColor Cyan
+    Write-Host "        LoginService       : $loginSvcUrl" -ForegroundColor Yellow
+    Write-Host "        MovimientosService : $movSvcUrl" -ForegroundColor Yellow
     Write-Host ""
     Write-Host "  EN CUALQUIER OTRA COMPUTADORA O CELULAR (Incluso en la ESPE o con datos):" -ForegroundColor White
     Write-Host "  1. Para Web: Abre la URL de arriba en cualquier navegador." -ForegroundColor Gray
     Write-Host "  2. Para Escritorio / Consola: Ejecuta: CAMBIAR_IP_SERVIDOR.bat $tunnelUrl" -ForegroundColor Gray
-    Write-Host "  3. Para App Movil Android: Pega $tunnelUrl en 'Configurar Servidor'." -ForegroundColor Gray
+    Write-Host "  3. Para App Movil MAUI: Pega $tunnelUrl en el campo Servidor al iniciar sesion." -ForegroundColor Gray
     Write-Host ""
-    Write-Host "  IMPORTANTE: Mantén esta ventana abierta mientras uses la conexión." -ForegroundColor Magenta
+    Write-Host "  IMPORTANTE: Manten esta ventana abierta mientras uses la conexion." -ForegroundColor Magenta
     Write-Host "============================================================================" -ForegroundColor Green
     Write-Host ""
 
@@ -95,4 +106,3 @@ if ($tunnelUrl) {
 } else {
     Write-Host "[ERROR] No se pudo obtener la URL del tunel Cloudflare." -ForegroundColor Red
 }
-

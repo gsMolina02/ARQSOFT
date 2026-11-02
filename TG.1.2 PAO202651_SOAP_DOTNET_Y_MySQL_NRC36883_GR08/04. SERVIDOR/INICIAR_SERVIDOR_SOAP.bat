@@ -19,6 +19,6 @@ echo.
 
 :: 2. Iniciar IIS Express en puerto 62278
 echo [2/2] Iniciando IIS Express para servicios WCF SOAP...
-set "PATH_SERVER=%~dp004. SERVIDOR\WS_EuBank_SOAPDOTNET_GR08\WS_EuBank_SOAPDOTNET_GR08"
+set "PATH_SERVER=%~dp0WS_EuBank_SOAPDOTNET_GR08\WS_EuBank_SOAPDOTNET_GR08"
 "C:\Program Files\IIS Express\iisexpress.exe" /path:"%PATH_SERVER%" /port:62278
 pause

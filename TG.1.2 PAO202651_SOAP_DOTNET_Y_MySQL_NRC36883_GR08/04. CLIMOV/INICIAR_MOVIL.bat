@@ -8,7 +8,7 @@ echo.
 
 set "ANDROID_SDK_ROOT=C:\Users\danie\AppData\Local\Android\Sdk"
 set "PATH=C:\Users\danie\AppData\Local\Android\Sdk\platform-tools;%PATH%"
-cd /d "%~dp004. CLIMOV\CLIMOV_EurekaBank_SOAPDOTNET_GR08\CLIMOV_EurekaBank_SOAPDOTNET_GR08"
+cd /d "%~dp0CLIMOV_EurekaBank_SOAPDOTNET_GR08\CLIMOV_EurekaBank_SOAPDOTNET_GR08"
 
 :: 1. Detectar dispositivos ADB
 echo [1/2] Detectando dispositivos Android...
@@ -47,17 +47,17 @@ if "%op%"=="2" (
 )
 
 if "%op%"=="3" (
-    start "" "%~dp004. CLIMOV\CLIMOV_EurekaBank_SOAPDOTNET_GR08\CLIMOV_EurekaBank_SOAPDOTNET_GR08.sln"
+    start "" "%~dp0CLIMOV_EurekaBank_SOAPDOTNET_GR08\CLIMOV_EurekaBank_SOAPDOTNET_GR08.sln"
     goto :fin
 )
 
 if "%op%"=="4" (
-    call "%~dp0CAMBIAR_IP_SERVIDOR.bat"
+    call "%~dp0..\CAMBIAR_IP_SERVIDOR.bat"
     goto :fin
 )
 
 if "%op%"=="5" (
-    call "%~dp06_CONECTAR_CELULAR_WIFI.bat"
+    call "%~dp0CONECTAR_CELULAR_WIFI.bat"
     goto :fin
 )
 

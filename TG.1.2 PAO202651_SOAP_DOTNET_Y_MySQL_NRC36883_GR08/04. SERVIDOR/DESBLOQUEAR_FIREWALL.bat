@@ -14,7 +14,7 @@ if %errorlevel% neq 0 (
     echo.
     echo   1. Cierre esta ventana.
     echo   2. Haga CLIC DERECHO sobre este archivo:
-    echo      5_DESBLOQUEAR_FIREWALL.bat
+    echo      DESBLOQUEAR_FIREWALL.bat
     echo   3. Seleccione: "Ejecutar como administrador"
     echo.
     echo ============================================================================
@@ -54,7 +54,7 @@ echo       [OK] Puertos 62278 (SOAP), 5150 (Web) y 3306 (MySQL) habilitados.
 echo.
 
 echo [3/3] Configurando clientes locales...
-powershell -ExecutionPolicy Bypass -File "%~dp0CONFIGURAR_IP_CLIENTES.ps1" -NuevaIP "%LOCAL_IP%" >nul 2>&1
+powershell -ExecutionPolicy Bypass -File "%~dp0..\CONFIGURAR_IP_CLIENTES.ps1" -NuevaIP "%LOCAL_IP%" >nul 2>&1
 
 echo.
 echo ============================================================================

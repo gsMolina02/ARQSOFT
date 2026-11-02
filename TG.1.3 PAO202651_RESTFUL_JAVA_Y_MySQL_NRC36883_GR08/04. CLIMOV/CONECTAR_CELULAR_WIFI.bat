@@ -48,11 +48,9 @@ echo   CONEXION INALAMBRICA ACTIVA Y FUNCIONANDO
 echo.
 echo   En tu celular:
 echo   - Ya esta configurado el servidor en: 127.0.0.1:8080
-echo   - Ingresa tus credenciales (ej. carmona / 12345) y pulsa INICIAR SESION.
+echo   - Ingresa tus credenciales (ej. MONSTER / MONSTER9) y pulsa INICIAR SESION.
 echo.
 echo   PUEDES DESCONECTAR EL CABLE USB EN CUALQUIER MOMENTO.
-echo   La aplicacion se comunica 100 por ciento inalambrica por Wi-Fi.
 echo ============================================================================
 echo.
 pause
-

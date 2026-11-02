@@ -8,7 +8,7 @@ echo.
 
 set "ANDROID_SDK_ROOT=C:\Users\danie\AppData\Local\Android\Sdk"
 set "PATH=C:\Users\danie\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\Android\Android Studio\bin;%PATH%"
-cd /d "%~dp004. CLIMOV\RestClienteMovil"
+cd /d "%~dp0RestClienteMovil"
 
 :: 1. Detectar dispositivos ADB
 echo [1/3] Detectando dispositivos / emuladores conectados...
@@ -56,17 +56,17 @@ if "%op%"=="2" (
 if "%op%"=="3" (
     echo.
     echo Abriendo proyecto en Android Studio...
-    start "" "C:\Program Files\Android\Android Studio\bin\studio64.exe" "%~dp004. CLIMOV\RestClienteMovil"
+    start "" "C:\Program Files\Android\Android Studio\bin\studio64.exe" "%~dp0RestClienteMovil"
     goto :fin
 )
 
 if "%op%"=="4" (
-    call "%~dp0CAMBIAR_IP_SERVIDOR.bat"
+    call "%~dp0..\CAMBIAR_IP_SERVIDOR.bat"
     goto :fin
 )
 
 if "%op%"=="5" (
-    call "%~dp06_CONECTAR_CELULAR_WIFI.bat"
+    call "%~dp0CONECTAR_CELULAR_WIFI.bat"
     goto :fin
 )
 

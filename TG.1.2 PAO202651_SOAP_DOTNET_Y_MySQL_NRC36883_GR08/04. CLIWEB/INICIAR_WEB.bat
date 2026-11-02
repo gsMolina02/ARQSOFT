@@ -1,4 +1,5 @@
 @echo off
+chcp 65001 >nul
 title EurekaBank SOAP .NET - Portal Web ASP.NET Core MVC (GR08)
 echo ============================================================================
 echo   INICIANDO PORTAL WEB EUREKABANK SOAP .NET (GRUPO 08)
@@ -12,7 +13,7 @@ for /f "tokens=5" %%a in ('netstat -ano ^| findstr :5150 ^| findstr LISTENING') 
     taskkill /F /PID %%a >nul 2>&1
 )
 
-cd /d "%~dp004. CLIWEB\CLIWEB_EuBank_SOAPDOTNET_GR08\CLIWEB_EuBank_SOAPDOTNET_GR08"
+cd /d "%~dp0CLIWEB_EuBank_SOAPDOTNET_GR08\CLIWEB_EuBank_SOAPDOTNET_GR08"
 echo Iniciando servidor web Kestrel...
 start "" "http://localhost:5150"
 dotnet run

@@ -31,8 +31,8 @@ echo.
 
 :: 3. Desplegar / Asegurar aplicaciones
 echo [3/3] Desplegando servicios RESTful y Cliente Web...
-call "C:\payara-7.2026.9\payara7\bin\asadmin.bat" deploy --force=true --contextroot /Rest_EurekaBank --name Rest_EurekaBank "%~dp004. SERVIDOR\WS_EurekaBank\dist\Rest_EurekaBank.war" >nul 2>&1
-call "C:\payara-7.2026.9\payara7\bin\asadmin.bat" deploy --force=true --contextroot /RestClienteWeb --name RestClienteWeb "%~dp004. CLIWEB\RestClienteWeb\dist\RestClienteWeb.war" >nul 2>&1
+call "C:\payara-7.2026.9\payara7\bin\asadmin.bat" deploy --force=true --contextroot /Rest_EurekaBank --name Rest_EurekaBank "%~dp0WS_EurekaBank\dist\Rest_EurekaBank.war" >nul 2>&1
+call "C:\payara-7.2026.9\payara7\bin\asadmin.bat" deploy --force=true --contextroot /RestClienteWeb --name RestClienteWeb "%~dp0..\04. CLIWEB\RestClienteWeb\dist\RestClienteWeb.war" >nul 2>&1
 
 echo.
 echo ============================================================================
@@ -44,4 +44,3 @@ echo ===========================================================================
 echo Abriendo endpoint de prueba en el navegador...
 start "" "http://localhost:8080/Rest_EurekaBank/webresources/coreBancario/movimientos/00100001"
 pause
-
