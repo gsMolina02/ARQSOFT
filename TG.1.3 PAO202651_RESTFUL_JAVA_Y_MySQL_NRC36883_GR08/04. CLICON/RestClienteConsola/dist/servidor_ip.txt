@@ -1,1 +1,1 @@
-https://exchange-por-bottom-exam.trycloudflare.com
+192.168.100.15:8080

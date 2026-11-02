@@ -34,36 +34,40 @@ $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 # 1. Actualizar CLICON CoreBancario.java
 $cliconCb = Join-Path $RootDir "04. CLICON\RestClienteConsola\src\ec\edu\monster\ws\CoreBancario.java"
 if (Test-Path $cliconCb) {
-    $c = Get-Content $cliconCb -Raw
+    $c = [System.IO.File]::ReadAllText($cliconCb, [System.Text.Encoding]::UTF8)
+    if ($c.StartsWith("`u{FEFF}")) { $c = $c.Substring(1) }
     $c = $c -replace 'http://[^/:]+:8080/Rest_EurekaBank/webresources', ($BaseUri.Replace("/coreBancario", ""))
-    Set-Content -Path $cliconCb -Value $c -Encoding UTF8
+    [System.IO.File]::WriteAllText($cliconCb, $c, $utf8NoBom)
     Write-Host "[OK] Actualizado CLICON: $cliconCb" -ForegroundColor Green
 }
 
 # 2. Actualizar CLIESC CoreBancario.java
 $cliescCb = Join-Path $RootDir "04. CLIESC\RestClienteEscritorio\src\ec\edu\monster\ws\CoreBancario.java"
 if (Test-Path $cliescCb) {
-    $c = Get-Content $cliescCb -Raw
+    $c = [System.IO.File]::ReadAllText($cliescCb, [System.Text.Encoding]::UTF8)
+    if ($c.StartsWith("`u{FEFF}")) { $c = $c.Substring(1) }
     $c = $c -replace 'http://[^/:]+:8080/Rest_EurekaBank/webresources', ($BaseUri.Replace("/coreBancario", ""))
-    Set-Content -Path $cliescCb -Value $c -Encoding UTF8
+    [System.IO.File]::WriteAllText($cliescCb, $c, $utf8NoBom)
     Write-Host "[OK] Actualizado CLIESC: $cliescCb" -ForegroundColor Green
 }
 
 # 3. Actualizar CLIWEB EurekaController.java
 $cliwebCtrl = Join-Path $RootDir "04. CLIWEB\RestClienteWeb\src\java\ec\edu\monster\controlador\EurekaController.java"
 if (Test-Path $cliwebCtrl) {
-    $c = Get-Content $cliwebCtrl -Raw
+    $c = [System.IO.File]::ReadAllText($cliwebCtrl, [System.Text.Encoding]::UTF8)
+    if ($c.StartsWith("`u{FEFF}")) { $c = $c.Substring(1) }
     $c = $c -replace 'http://[^/:]+:8080/Rest_EurekaBank/webresources/coreBancario', $BaseUri
-    Set-Content -Path $cliwebCtrl -Value $c -Encoding UTF8
+    [System.IO.File]::WriteAllText($cliwebCtrl, $c, $utf8NoBom)
     Write-Host "[OK] Actualizado CLIWEB: $cliwebCtrl" -ForegroundColor Green
 }
 
 # 4. Actualizar CLIMOV RestApiClient.java
 $climovRest = Join-Path $RootDir "04. CLIMOV\RestClienteMovil\app\src\main\java\ec\edu\monster\ws\RestApiClient.java"
 if (Test-Path $climovRest) {
-    $c = Get-Content $climovRest -Raw
+    $c = [System.IO.File]::ReadAllText($climovRest, [System.Text.Encoding]::UTF8)
+    if ($c.StartsWith("`u{FEFF}")) { $c = $c.Substring(1) }
     $c = $c -replace 'activeHost\s*=\s*"[^"]+"', ('activeHost = "' + $CleanHost + '"')
-    Set-Content -Path $climovRest -Value $c -Encoding UTF8
+    [System.IO.File]::WriteAllText($climovRest, $c, $utf8NoBom)
     Write-Host "[OK] Actualizado CLIMOV: $climovRest" -ForegroundColor Green
 }
 

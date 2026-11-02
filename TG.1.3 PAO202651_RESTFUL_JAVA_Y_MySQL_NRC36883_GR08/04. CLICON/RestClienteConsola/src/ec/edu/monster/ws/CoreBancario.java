@@ -20,7 +20,7 @@ import java.util.Locale;
 /**
  * Cliente HTTP RESTful para el servidor EurekaBank WS_EurekaBank
  * Compatible con Java 8+ sin dependencias externas pesadas.
- * @author Grupo 08 (Gustavo Molina / Daniela TituaÃƒÂ±a)
+ * @author Grupo 08 (Gustavo Molina / Daniela TituaÃƒÆ’Ã‚Â±a)
  */
 public class CoreBancario {
 
@@ -181,7 +181,7 @@ public class CoreBancario {
             }
             return new Response(code, sb.toString());
         } catch (Exception e) {
-            System.err.println("Error de comunicaciÃƒÂ³n HTTP POST: " + e.getMessage());
+            System.err.println("Error de comunicaciÃƒÆ’Ã‚Â³n HTTP POST: " + e.getMessage());
             return new Response(500, e.getMessage());
         }
     }
@@ -189,5 +189,6 @@ public class CoreBancario {
     public void close() {
     }
 }
+
 
 

@@ -1,4 +1,4 @@
-﻿package ec.edu.monster.ws;
+package ec.edu.monster.ws;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -27,7 +27,7 @@ public class RestApiClient {
     private static final String KEY_SERVER = "server_host";
 
     // Host activo actual
-    private static volatile String activeHost = "https://exchange-por-bottom-exam.trycloudflare.com";
+    private static volatile String activeHost = "192.168.100.15:8080";
 
     // Candidatos para auto-conexiÃ³n y failover
     private static final String[] CANDIDATES = {
@@ -297,5 +297,6 @@ public class RestApiClient {
         return sb.toString();
     }
 }
+
 
 

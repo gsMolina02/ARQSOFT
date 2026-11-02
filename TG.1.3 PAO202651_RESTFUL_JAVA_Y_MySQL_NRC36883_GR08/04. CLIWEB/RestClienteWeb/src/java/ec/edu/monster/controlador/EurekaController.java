@@ -1,4 +1,4 @@
-﻿package ec.edu.monster.controlador;
+package ec.edu.monster.controlador;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -209,5 +209,6 @@ public class EurekaController extends HttpServlet {
         return result.toString();
     }
 }
+
 
 
