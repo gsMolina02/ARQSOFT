@@ -27,13 +27,13 @@ public class RestApiClient {
     private static final String KEY_SERVER = "server_host";
 
     // Host activo actual
-    private static volatile String activeHost = "192.168.100.15:8080";
+    private static volatile String activeHost = "127.0.0.1:8080";
 
     // Candidatos para auto-conexión y failover
     private static final String[] CANDIDATES = {
-        "192.168.100.15:8080",
         "127.0.0.1:8080",
         "localhost:8080",
+        "192.168.100.15:8080",
         "10.0.2.2:8080"
     };
 
@@ -69,7 +69,7 @@ public class RestApiClient {
 
     public static String buildUrl(String host, String path) {
         if (host == null || host.trim().isEmpty()) {
-            host = "192.168.100.15:8080";
+            host = "127.0.0.1:8080";
         }
         host = host.trim();
         if (host.startsWith("http://") || host.startsWith("https://")) {

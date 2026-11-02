@@ -28,9 +28,10 @@ echo   [1] Instalar y ejecutar en el dispositivo conectado (installDebug)
 echo   [2] Compilar APK Debug (gradlew assembleDebug)
 echo   [3] Abrir proyecto en Android Studio
 echo   [4] Configurar IP del servidor (Wi-Fi LAN)
+echo   [5] Conectar celular 100%% inalámbrico por Wi-Fi (sin cables)
 echo ============================================================================
 echo.
-set /p op="Seleccione una opcion (1-4): "
+set /p op="Seleccione una opcion (1-5): "
 
 if "%op%"=="1" (
     echo.
@@ -61,6 +62,11 @@ if "%op%"=="3" (
 
 if "%op%"=="4" (
     call "%~dp0CAMBIAR_IP_SERVIDOR.bat"
+    goto :fin
+)
+
+if "%op%"=="5" (
+    call "%~dp0CONECTAR_CELULAR_INALAMBRICO.bat"
     goto :fin
 )
 
