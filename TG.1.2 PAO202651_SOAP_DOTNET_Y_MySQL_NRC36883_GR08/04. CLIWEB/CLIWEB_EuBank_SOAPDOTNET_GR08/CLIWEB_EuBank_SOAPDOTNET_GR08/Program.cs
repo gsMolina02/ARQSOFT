@@ -36,8 +36,54 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+// Proxy transparente para servicios WCF SOAP (puerto 62278)
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path.StartsWithSegments("/Services"))
+    {
+        using var handler = new HttpClientHandler { AllowAutoRedirect = false };
+        using var client = new HttpClient(handler);
+        var targetUri = new Uri($"http://localhost:62278{context.Request.Path}{context.Request.QueryString}");
+        var requestMessage = new HttpRequestMessage(new HttpMethod(context.Request.Method), targetUri);
+
+        foreach (var header in context.Request.Headers)
+        {
+            if (!header.Key.Equals("Host", StringComparison.OrdinalIgnoreCase) &&
+                !header.Key.Equals("Content-Length", StringComparison.OrdinalIgnoreCase))
+            {
+                requestMessage.Headers.TryAddWithoutValidation(header.Key, header.Value.ToArray());
+            }
+        }
+
+        if (context.Request.ContentLength > 0 || !string.IsNullOrEmpty(context.Request.ContentType))
+        {
+            requestMessage.Content = new StreamContent(context.Request.Body);
+            if (!string.IsNullOrEmpty(context.Request.ContentType))
+            {
+                requestMessage.Content.Headers.TryAddWithoutValidation("Content-Type", context.Request.ContentType);
+            }
+        }
+
+        using var responseMessage = await client.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead, context.RequestAborted);
+        context.Response.StatusCode = (int)responseMessage.StatusCode;
+
+        foreach (var header in responseMessage.Headers)
+        {
+            context.Response.Headers[header.Key] = header.Value.ToArray();
+        }
+        foreach (var header in responseMessage.Content.Headers)
+        {
+            context.Response.Headers[header.Key] = header.Value.ToArray();
+        }
+
+        await responseMessage.Content.CopyToAsync(context.Response.Body);
+        return;
+    }
+    await next();
+});
 
 app.UseRouting();
 

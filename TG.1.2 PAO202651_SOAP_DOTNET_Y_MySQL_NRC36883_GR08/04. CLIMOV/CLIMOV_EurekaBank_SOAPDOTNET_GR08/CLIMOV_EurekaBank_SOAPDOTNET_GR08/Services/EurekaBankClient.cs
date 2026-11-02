@@ -8,7 +8,7 @@ namespace CLIMOV_EurekaBank_SOAPDOTNET_GR08.Services
     public sealed class EurekaBankClient
     {
         // Configurable Server URL for LAN multi-computer / mobile connection
-        public static string BaseUrl { get; set; } = "http://127.0.0.1:62278";
+        public static string BaseUrl { get; set; } = "http://192.168.100.15:62278";
 
         private static LoginServiceClient CreateLoginClient(string endpoint)
         {

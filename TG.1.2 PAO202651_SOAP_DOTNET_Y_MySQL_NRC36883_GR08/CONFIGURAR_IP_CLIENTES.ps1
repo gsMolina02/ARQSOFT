@@ -5,24 +5,43 @@ param(
 
 $ErrorActionPreference = "SilentlyContinue"
 $RootDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+
+# Normalizar TargetUrl y CleanHost
+$NuevaIP = $NuevaIP.Trim()
+if ($NuevaIP -match "^https?://") {
+    $TargetUrl = $NuevaIP.TrimEnd('/')
+    $CleanHost = $TargetUrl
+    $IsHttps = $TargetUrl.StartsWith("https://", [System.StringComparison]::OrdinalIgnoreCase)
+} else {
+    $HostPort = if ($NuevaIP -match ":") { $NuevaIP } else { "${NuevaIP}:62278" }
+    $TargetUrl = "http://${HostPort}"
+    $CleanHost = $HostPort
+    $IsHttps = $false
+}
+
+$SecMode = if ($IsHttps) { "Transport" } else { "None" }
+
 Write-Host "======================================================================" -ForegroundColor Cyan
-Write-Host "  ACTUALIZANDO IP DEL SERVIDOR SOAP .NET EN LOS 4 CLIENTES (GR08)" -ForegroundColor Cyan
-Write-Host "  Nueva direccion del Servidor SOAP: http://${NuevaIP}:62278" -ForegroundColor Yellow
+Write-Host "  ACTUALIZANDO SERVIDOR SOAP .NET EN LOS 4 CLIENTES (GR08)" -ForegroundColor Cyan
+Write-Host "  Destino: $TargetUrl" -ForegroundColor Yellow
+Write-Host "  Modo de Seguridad WCF: $SecMode" -ForegroundColor Yellow
 Write-Host "======================================================================" -ForegroundColor Cyan
 
-# Guardar servidor_ip.txt en raiz y clientes
-Set-Content -Path (Join-Path $RootDir "servidor_ip.txt") -Value $NuevaIP -Encoding UTF8
+# Guardar servidor_ip.txt sin BOM
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+[System.IO.File]::WriteAllText((Join-Path $RootDir "servidor_ip.txt"), $TargetUrl, $utf8NoBom)
 
 # 1. Actualizar CLICON App.config y .exe.config
 $cliconConfigs = @(
-    (Join-Path $RootDir "04. CLICON\CLICON_EuBank_SOAPDOTNET_GR08\App.config"),
-    (Join-Path $RootDir "04. CLICON\CLICON_EuBank_SOAPDOTNET_GR08\bin\Debug\CLICON_EuBank_SOAPDOTNET_GR08.exe.config")
+    (Join-Path $RootDir "04. CLICON\CLICON_EuBank_SOAPDOTNET_GR08\CLICON_EuBank_SOAPDOTNET_GR08\App.config"),
+    (Join-Path $RootDir "04. CLICON\CLICON_EuBank_SOAPDOTNET_GR08\CLICON_EuBank_SOAPDOTNET_GR08\bin\Debug\CLICON_EuBank_SOAPDOTNET_GR08.exe.config")
 )
 foreach ($cfg in $cliconConfigs) {
     if (Test-Path $cfg) {
-        $c = Get-Content $cfg -Raw
-        $c = $c -replace "http://[^/:]+:62278", "http://${NuevaIP}:62278"
-        Set-Content -Path $cfg -Value $c -Encoding UTF8
+        $c = [System.IO.File]::ReadAllText($cfg, [System.Text.Encoding]::UTF8)
+        $c = $c -replace 'https?://[^/:]+(:\d+)?/Services', "${TargetUrl}/Services"
+        $c = $c -replace '<security mode="(None|Transport)"\s*/>', "<security mode=""$SecMode"" />"
+        [System.IO.File]::WriteAllText($cfg, $c, $utf8NoBom)
         Write-Host "[OK] Actualizado CLICON: $cfg" -ForegroundColor Green
     }
 }
@@ -34,9 +53,10 @@ $cliescConfigs = @(
 )
 foreach ($cfg in $cliescConfigs) {
     if (Test-Path $cfg) {
-        $c = Get-Content $cfg -Raw
-        $c = $c -replace "http://[^/:]+:62278", "http://${NuevaIP}:62278"
-        Set-Content -Path $cfg -Value $c -Encoding UTF8
+        $c = [System.IO.File]::ReadAllText($cfg, [System.Text.Encoding]::UTF8)
+        $c = $c -replace 'https?://[^/:]+(:\d+)?/Services', "${TargetUrl}/Services"
+        $c = $c -replace '<security mode="(None|Transport)"\s*/>', "<security mode=""$SecMode"" />"
+        [System.IO.File]::WriteAllText($cfg, $c, $utf8NoBom)
         Write-Host "[OK] Actualizado CLIESC: $cfg" -ForegroundColor Green
     }
 }
@@ -44,13 +64,14 @@ foreach ($cfg in $cliescConfigs) {
 # 3. Actualizar CLIWEB appsettings.json
 $cliwebConfigs = @(
     (Join-Path $RootDir "04. CLIWEB\CLIWEB_EuBank_SOAPDOTNET_GR08\CLIWEB_EuBank_SOAPDOTNET_GR08\appsettings.json"),
-    (Join-Path $RootDir "04. CLIWEB\CLIWEB_EuBank_SOAPDOTNET_GR08\CLIWEB_EuBank_SOAPDOTNET_GR08\appsettings.Development.json")
+    (Join-Path $RootDir "04. CLIWEB\CLIWEB_EuBank_SOAPDOTNET_GR08\CLIWEB_EuBank_SOAPDOTNET_GR08\appsettings.Development.json"),
+    (Join-Path $RootDir "04. CLIWEB\CLIWEB_EuBank_SOAPDOTNET_GR08\CLIWEB_EuBank_SOAPDOTNET_GR08\bin\Debug\net10.0\appsettings.json")
 )
 foreach ($cfg in $cliwebConfigs) {
     if (Test-Path $cfg) {
-        $c = Get-Content $cfg -Raw
-        $c = $c -replace '"BaseUrl":\s*"http://[^"]+"', ('"BaseUrl": "http://' + $NuevaIP + ':62278/"')
-        Set-Content -Path $cfg -Value $c -Encoding UTF8
+        $c = [System.IO.File]::ReadAllText($cfg, [System.Text.Encoding]::UTF8)
+        $c = $c -replace '"BaseUrl":\s*"https?://[^"]+"', ('"BaseUrl": "' + $TargetUrl + '/"')
+        [System.IO.File]::WriteAllText($cfg, $c, $utf8NoBom)
         Write-Host "[OK] Actualizado CLIWEB: $cfg" -ForegroundColor Green
     }
 }
@@ -58,12 +79,12 @@ foreach ($cfg in $cliwebConfigs) {
 # 4. Actualizar CLIMOV EurekaBankClient.cs
 $climovFile = Join-Path $RootDir "04. CLIMOV\CLIMOV_EurekaBank_SOAPDOTNET_GR08\CLIMOV_EurekaBank_SOAPDOTNET_GR08\Services\EurekaBankClient.cs"
 if (Test-Path $climovFile) {
-    $c = Get-Content $climovFile -Raw
-    $c = $c -replace 'http://[^/:]+:62278', "http://${NuevaIP}:62278"
-    Set-Content -Path $climovFile -Value $c -Encoding UTF8
+    $c = [System.IO.File]::ReadAllText($climovFile, [System.Text.Encoding]::UTF8)
+    $c = $c -replace 'BaseUrl\s*\{\s*get;\s*set;\s*\}\s*=\s*"[^"]+";', ('BaseUrl { get; set; } = "' + $TargetUrl + '";')
+    [System.IO.File]::WriteAllText($climovFile, $c, $utf8NoBom)
     Write-Host "[OK] Actualizado CLIMOV: $climovFile" -ForegroundColor Green
 }
 
 Write-Host "======================================================================" -ForegroundColor Cyan
-Write-Host "  Todos los clientes SOAP .NET apuntan ahora a http://${NuevaIP}:62278" -ForegroundColor Green
+Write-Host "  Todos los clientes SOAP .NET apuntan ahora a: $TargetUrl" -ForegroundColor Green
 Write-Host "======================================================================" -ForegroundColor Cyan
