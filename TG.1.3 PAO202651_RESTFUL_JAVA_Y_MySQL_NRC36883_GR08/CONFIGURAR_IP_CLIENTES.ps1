@@ -23,12 +23,13 @@ Write-Host "  Destino: $CleanHost" -ForegroundColor Yellow
 Write-Host "  URI REST: $BaseUri" -ForegroundColor Yellow
 Write-Host "======================================================================" -ForegroundColor Cyan
 
-# Guardar servidor_ip.txt en raiz, CLICON y CLIESC (tanto en src como en dist)
-Set-Content -Path (Join-Path $RootDir "servidor_ip.txt") -Value $CleanHost -Encoding UTF8
-Set-Content -Path (Join-Path $RootDir "04. CLICON\RestClienteConsola\servidor_ip.txt") -Value $CleanHost -Encoding UTF8
-Set-Content -Path (Join-Path $RootDir "04. CLICON\RestClienteConsola\dist\servidor_ip.txt") -Value $CleanHost -Encoding UTF8
-Set-Content -Path (Join-Path $RootDir "04. CLIESC\RestClienteEscritorio\servidor_ip.txt") -Value $CleanHost -Encoding UTF8
-Set-Content -Path (Join-Path $RootDir "04. CLIESC\RestClienteEscritorio\dist\servidor_ip.txt") -Value $CleanHost -Encoding UTF8
+# Guardar servidor_ip.txt en raiz, CLICON y CLIESC (sin BOM)
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+[System.IO.File]::WriteAllText((Join-Path $RootDir "servidor_ip.txt"), $CleanHost, $utf8NoBom)
+[System.IO.File]::WriteAllText((Join-Path $RootDir "04. CLICON\RestClienteConsola\servidor_ip.txt"), $CleanHost, $utf8NoBom)
+[System.IO.File]::WriteAllText((Join-Path $RootDir "04. CLICON\RestClienteConsola\dist\servidor_ip.txt"), $CleanHost, $utf8NoBom)
+[System.IO.File]::WriteAllText((Join-Path $RootDir "04. CLIESC\RestClienteEscritorio\servidor_ip.txt"), $CleanHost, $utf8NoBom)
+[System.IO.File]::WriteAllText((Join-Path $RootDir "04. CLIESC\RestClienteEscritorio\dist\servidor_ip.txt"), $CleanHost, $utf8NoBom)
 
 # 1. Actualizar CLICON CoreBancario.java
 $cliconCb = Join-Path $RootDir "04. CLICON\RestClienteConsola\src\ec\edu\monster\ws\CoreBancario.java"

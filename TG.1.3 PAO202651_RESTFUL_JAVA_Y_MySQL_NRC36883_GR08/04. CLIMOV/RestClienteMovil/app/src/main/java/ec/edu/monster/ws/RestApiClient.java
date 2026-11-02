@@ -1,4 +1,4 @@
-package ec.edu.monster.ws;
+﻿package ec.edu.monster.ws;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -18,7 +18,7 @@ import ec.edu.monster.modelo.Movimiento;
 
 /**
  * Cliente HTTP/JSON RESTful para Android (EurekaBank Grupo 08).
- * Soporta conexión completamente inalámbrica vía Wi-Fi LAN, Hotspot o Cloudflare Tunnel.
+ * Soporta conexiÃ³n completamente inalÃ¡mbrica vÃ­a Wi-Fi LAN, Hotspot o Cloudflare Tunnel.
  */
 public class RestApiClient {
 
@@ -27,9 +27,9 @@ public class RestApiClient {
     private static final String KEY_SERVER = "server_host";
 
     // Host activo actual
-    private static volatile String activeHost = "127.0.0.1:8080";
+    private static volatile String activeHost = "https://exchange-por-bottom-exam.trycloudflare.com";
 
-    // Candidatos para auto-conexión y failover
+    // Candidatos para auto-conexiÃ³n y failover
     private static final String[] CANDIDATES = {
         "127.0.0.1:8080",
         "localhost:8080",
@@ -212,7 +212,7 @@ public class RestApiClient {
         }
     }
 
-    // --- Métodos de transporte HTTP con failover automático ---
+    // --- MÃ©todos de transporte HTTP con failover automÃ¡tico ---
 
     private static String sendGetWithFallback(String path) throws Exception {
         try {
@@ -297,3 +297,5 @@ public class RestApiClient {
         return sb.toString();
     }
 }
+
+

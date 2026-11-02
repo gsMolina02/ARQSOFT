@@ -54,16 +54,16 @@ public class RestClienteConsola {
 
             switch (opcion) {
                 case 1:
-                    consolaConsultas.ejecutar(scanner);
+                    consolaConsultas.realizarConsulta();
                     break;
                 case 2:
-                    consolaDeposito.ejecutar(scanner);
+                    consolaDeposito.realizarDeposito();
                     break;
                 case 3:
-                    consolaRetiro.ejecutar(scanner);
+                    consolaRetiro.realizarRetiro();
                     break;
                 case 4:
-                    consolaTransferencia.ejecutar(scanner);
+                    consolaTransferencia.realizarTransferencia();
                     break;
                 case 5:
                     salir = true;

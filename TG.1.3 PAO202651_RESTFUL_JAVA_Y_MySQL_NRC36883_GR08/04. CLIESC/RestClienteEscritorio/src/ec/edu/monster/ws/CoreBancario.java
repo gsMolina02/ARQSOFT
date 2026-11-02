@@ -1,4 +1,4 @@
-package ec.edu.monster.ws;
+﻿package ec.edu.monster.ws;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,7 +22,7 @@ import java.util.Locale;
 /**
  * Cliente HTTP RESTful para el servidor EurekaBank WS_EurekaBank
  * Compatible con Java 8+ sin dependencias externas pesadas.
- * @author Grupo 08 (Gustavo Molina / Daniela Tituaña)
+ * @author Grupo 08 (Gustavo Molina / Daniela TituaÃƒÂ±a)
  */
 public class CoreBancario {
 
@@ -45,20 +45,48 @@ public class CoreBancario {
     }
 
     private static String resolveBaseUri() {
+        String target = null;
         try {
-            java.io.File f = new java.io.File("servidor_ip.txt");
-            if (f.exists()) {
-                String ip = new String(java.nio.file.Files.readAllBytes(f.toPath())).trim();
-                if (!ip.isEmpty()) {
-                    return ip.startsWith("http") ? ip : "http://" + ip + ":8080/Rest_EurekaBank/webresources/coreBancario";
+            java.io.File[] files = new java.io.File[] {
+                new java.io.File("servidor_ip.txt"),
+                new java.io.File("dist", "servidor_ip.txt"),
+                new java.io.File("..", "servidor_ip.txt"),
+                new java.io.File("../..", "servidor_ip.txt")
+            };
+            for (java.io.File f : files) {
+                if (f.exists()) {
+                    String ip = new String(java.nio.file.Files.readAllBytes(f.toPath()), java.nio.charset.StandardCharsets.UTF_8).trim();
+                    if (ip.startsWith("\uFEFF")) {
+                        ip = ip.substring(1).trim();
+                    }
+                    if (!ip.isEmpty()) {
+                        target = ip;
+                        break;
+                    }
                 }
             }
-            String env = System.getenv("EUREKABANK_REST_URL");
-            if (env != null && !env.trim().isEmpty()) {
-                return env.trim();
+            if (target == null) {
+                String env = System.getenv("EUREKABANK_REST_URL");
+                if (env != null && !env.trim().isEmpty()) {
+                    target = env.trim();
+                }
             }
         } catch (Exception ignored) {}
-        return "http://localhost:8080/Rest_EurekaBank/webresources/coreBancario";
+
+        if (target == null || target.isEmpty()) {
+            return "https://exchange-por-bottom-exam.trycloudflare.com/Rest_EurekaBank/webresources/coreBancario";
+        }
+
+        target = target.trim();
+        if (target.startsWith("http://") || target.startsWith("https://")) {
+            String base = target.endsWith("/") ? target.substring(0, target.length() - 1) : target;
+            if (!base.contains("coreBancario")) {
+                base += "/Rest_EurekaBank/webresources/coreBancario";
+            }
+            return base;
+        }
+        String cleanHost = target.contains(":") ? target : target + ":8080";
+        return "http://" + cleanHost + "/Rest_EurekaBank/webresources/coreBancario";
     }
 
     private final String baseUri;
@@ -165,7 +193,7 @@ public class CoreBancario {
         } catch (Exception e) {
             OperationResult err = new OperationResult();
             err.setSuccess(false);
-            err.setMessage("Error de conexión: " + e.getMessage());
+            err.setMessage("Error de conexiÃƒÂ³n: " + e.getMessage());
             return err;
         }
         OperationResult err = new OperationResult();
@@ -186,7 +214,7 @@ public class CoreBancario {
         } catch (Exception e) {
             OperationResult err = new OperationResult();
             err.setSuccess(false);
-            err.setMessage("Error de conexión: " + e.getMessage());
+            err.setMessage("Error de conexiÃƒÂ³n: " + e.getMessage());
             return err;
         }
         OperationResult err = new OperationResult();
@@ -208,7 +236,7 @@ public class CoreBancario {
         } catch (Exception e) {
             OperationResult err = new OperationResult();
             err.setSuccess(false);
-            err.setMessage("Error de conexión: " + e.getMessage());
+            err.setMessage("Error de conexiÃƒÂ³n: " + e.getMessage());
             return err;
         }
         OperationResult err = new OperationResult();
@@ -255,7 +283,7 @@ public class CoreBancario {
             }
             return new Response(code, sb.toString());
         } catch (Exception e) {
-            System.err.println("Error de comunicación HTTP POST: " + e.getMessage());
+            System.err.println("Error de comunicaciÃƒÂ³n HTTP POST: " + e.getMessage());
             return new Response(500, e.getMessage());
         }
     }
@@ -263,3 +291,5 @@ public class CoreBancario {
     public void close() {
     }
 }
+
+

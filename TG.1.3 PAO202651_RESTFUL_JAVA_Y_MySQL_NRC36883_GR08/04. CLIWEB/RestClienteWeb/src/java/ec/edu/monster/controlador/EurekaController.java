@@ -1,4 +1,4 @@
-package ec.edu.monster.controlador;
+﻿package ec.edu.monster.controlador;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpSession;
 
 /**
  * Controlador Web MVC (Servlet) para consumir WS_EurekaBank RESTful
- * Grupo 08 - Gustavo Molina y Daniela Tituaña
+ * Grupo 08 - Gustavo Molina y Daniela TituaÃ±a
  */
 @WebServlet(name = "EurekaController", urlPatterns = {"/EurekaController"})
 public class EurekaController extends HttpServlet {
@@ -29,13 +29,13 @@ public class EurekaController extends HttpServlet {
         Object sessionIp = request.getSession().getAttribute("SERVER_IP");
         if (sessionIp != null && !sessionIp.toString().isEmpty()) {
             String h = sessionIp.toString();
-            return h.startsWith("http") ? h : "http://" + h + ":8080/Rest_EurekaBank/webresources/coreBancario";
+            return h.startsWith("http") ? h : "https://exchange-por-bottom-exam.trycloudflare.com/Rest_EurekaBank/webresources/coreBancario";
         }
         String envUrl = System.getenv("EUREKABANK_REST_URL");
         if (envUrl != null && !envUrl.trim().isEmpty()) {
             return envUrl.trim();
         }
-        return "http://localhost:8080/Rest_EurekaBank/webresources/coreBancario";
+        return "https://exchange-por-bottom-exam.trycloudflare.com/Rest_EurekaBank/webresources/coreBancario";
     }
 
     @Override
@@ -61,7 +61,7 @@ public class EurekaController extends HttpServlet {
             String t = (String) ses.getAttribute("TITULAR");
             if (u == null) u = "MONSTER";
             if (c == null) c = "00100001";
-            if (t == null) t = "Juan Carlos García López";
+            if (t == null) t = "Juan Carlos GarcÃ­a LÃ³pez";
             jsonResponse = String.format("{\"user\":\"%s\",\"cuenta\":\"%s\",\"titular\":\"%s\"}", u, c, t);
         } else {
             String numeroCuenta = request.getParameter("nCuenta");
@@ -114,16 +114,16 @@ public class EurekaController extends HttpServlet {
                 request.getSession().setAttribute("USER_LOGIN", u);
                 // Asignar cuenta personal sugerida por usuario
                 String miCuenta = "00100001";
-                String titular = "Juan Carlos García López";
+                String titular = "Juan Carlos GarcÃ­a LÃ³pez";
                 if ("monster".equalsIgnoreCase(u)) {
                     miCuenta = "00300001";
-                    titular = "Eduardo Mauricio Campaña Ortega";
+                    titular = "Eduardo Mauricio CampaÃ±a Ortega";
                 } else if ("cromero".equalsIgnoreCase(u)) {
                     miCuenta = "00100001";
                     titular = "Carlos Romero (Empleado)";
                 } else if ("dtituana".equalsIgnoreCase(u) || "dani".equalsIgnoreCase(u)) {
                     miCuenta = "00200002";
-                    titular = "Daniela Lissette Tituaña Moreno";
+                    titular = "Daniela Lissette TituaÃ±a Moreno";
                 } else if ("gmolina".equalsIgnoreCase(u)) {
                     miCuenta = "00200001";
                     titular = "Gustavo Stiven Molina Guaico";
@@ -139,7 +139,7 @@ public class EurekaController extends HttpServlet {
                 request.getSession().setAttribute("TITULAR", titular);
 
                 if (!jsonResp.contains("\"success\":true")) {
-                    jsonResp = "{\"success\":true,\"message\":\"Inicio de sesión correcto\"}";
+                    jsonResp = "{\"success\":true,\"message\":\"Inicio de sesiÃ³n correcto\"}";
                 }
             }
 
@@ -209,3 +209,5 @@ public class EurekaController extends HttpServlet {
         return result.toString();
     }
 }
+
+
