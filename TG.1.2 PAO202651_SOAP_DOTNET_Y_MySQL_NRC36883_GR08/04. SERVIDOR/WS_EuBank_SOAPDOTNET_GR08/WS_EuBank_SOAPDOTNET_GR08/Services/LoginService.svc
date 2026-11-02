@@ -1,0 +1,1 @@
+<%@ ServiceHost Language="C#" Debug="true" Service="WS_EuBank_SOAPDOTNET_GR08.LoginService" CodeBehind="LoginService.svc.cs" %>

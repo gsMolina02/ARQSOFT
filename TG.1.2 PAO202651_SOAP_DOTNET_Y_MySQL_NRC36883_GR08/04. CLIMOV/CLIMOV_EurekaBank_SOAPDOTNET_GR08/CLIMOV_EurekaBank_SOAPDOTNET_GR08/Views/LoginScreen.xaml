@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:CLIMOV_EurekaBank_SOAPDOTNET_GR08.ViewModels"
+             x:Class="CLIMOV_EurekaBank_SOAPDOTNET_GR08.Views.LoginScreen"
+             Title=""
+             BackgroundColor="{StaticResource BackgroundColor}">
+
+    <ContentPage.BindingContext>
+        <viewmodels:LoginViewModel />
+    </ContentPage.BindingContext>
+
+    <NavigationPage.TitleView>
+        <Grid />
+    </NavigationPage.TitleView>
+
+    <ScrollView>
+        <Grid Padding="24" RowDefinitions="*" MinimumHeightRequest="640">
+            <VerticalStackLayout Spacing="16" HorizontalOptions="Fill" VerticalOptions="Center">
+                <Image Source="sulli_logo.png"
+                       HeightRequest="120"
+                       WidthRequest="120"
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,12" />
+
+                <VerticalStackLayout Spacing="4" HorizontalOptions="Center" Margin="0,0,0,14">
+                    <Image Source="soap_java.png"
+                           HeightRequest="180"
+                           Aspect="AspectFit"
+                           HorizontalOptions="Center" />
+                    <Label Text="Sistema de Gestión Bancaria"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource PrimaryColor}"
+                           HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+
+                <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="{StaticResource InputBackgroundColor}" Padding="14,0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="4" />
+                    </Border.StrokeShape>
+                    <Entry Placeholder="Usuario"
+                           Text="{Binding Usuario}"
+                           HeightRequest="52"
+                           FontSize="16"
+                           BackgroundColor="Transparent"
+                           TextColor="{StaticResource EntryTextColor}"
+                           PlaceholderColor="{StaticResource PlaceholderColor}"
+                           ClearButtonVisibility="WhileEditing" />
+                </Border>
+
+                <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="{StaticResource InputBackgroundColor}" Padding="14,0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="4" />
+                    </Border.StrokeShape>
+                    <Entry Placeholder="Contraseña"
+                           Text="{Binding Clave}"
+                           IsPassword="True"
+                           HeightRequest="52"
+                           FontSize="16"
+                           BackgroundColor="Transparent"
+                           TextColor="{StaticResource EntryTextColor}"
+                           PlaceholderColor="{StaticResource PlaceholderColor}"
+                           ClearButtonVisibility="WhileEditing" />
+                </Border>
+
+                <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="{StaticResource InputBackgroundColor}" Padding="14,0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="4" />
+                    </Border.StrokeShape>
+                    <Entry Placeholder="Servidor SOAP (ej. http://127.0.0.1:62278)"
+                           Text="{Binding Servidor}"
+                           HeightRequest="52"
+                           FontSize="13"
+                           BackgroundColor="Transparent"
+                           TextColor="{StaticResource EntryTextColor}"
+                           PlaceholderColor="{StaticResource PlaceholderColor}"
+                           ClearButtonVisibility="WhileEditing" />
+                </Border>
+
+                <Button Text="Iniciar Sesión"
+                        Command="{Binding LoginCommand}"
+                        HeightRequest="56"
+                        CornerRadius="12"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        BackgroundColor="{StaticResource PrimaryColor}"
+                        TextColor="{StaticResource ButtonTextColor}"
+                        Margin="0,8,0,0" />
+
+                <ActivityIndicator IsRunning="{Binding IsLoading}"
+                                   IsVisible="{Binding IsLoading}"
+                                   Color="{StaticResource PrimaryColor}"
+                                   HeightRequest="30"
+                                   Margin="0,4,0,0" />
+
+                <Label Text="{Binding Mensaje}"
+                       FontSize="14"
+                       HorizontalTextAlignment="Center"
+                       Margin="0,4,0,0">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding EsExitoso}" Value="True">
+                            <Setter Property="TextColor" Value="{StaticResource SuccessColor}" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Label" Binding="{Binding EsExitoso}" Value="False">
+                            <Setter Property="TextColor" Value="{StaticResource ErrorColor}" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
+</ContentPage>

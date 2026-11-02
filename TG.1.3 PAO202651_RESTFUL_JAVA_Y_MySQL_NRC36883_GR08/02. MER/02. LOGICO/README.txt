@@ -1,8 +1,7 @@
 Proyecto de conversión de unidades
 GRUPO 3: 
-Cobeña Joan
-Pasquel Juan 
-Verdesoto Edison
+Tituaña Daniela
+Molina Gustavo
 
 Este proyecto no tiene Base de Datos 
 Las credenciales del sistema son: 

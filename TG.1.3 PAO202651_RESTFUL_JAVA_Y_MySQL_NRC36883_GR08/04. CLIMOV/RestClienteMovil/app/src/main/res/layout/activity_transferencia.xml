@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/imgSullivanTransf"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="6dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="Sullivan - Monsters Inc"
+            android:scaleType="fitCenter"
+            android:src="@drawable/sullivan" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="14dp"
+            android:text="Transferencia entre Cuentas"
+            android:textColor="#1E3C72"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <!-- CUENTA ORIGEN -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1. Cuenta Origen (Titular y Moneda):"
+            android:textColor="#1E293B"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="3dp" />
+
+        <Spinner
+            android:id="@+id/spinnerCuentaOrigen"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:drawable/btn_dropdown"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/editTextCuentaOrigen"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Cta. Origen (Ej. 00200001)"
+            android:inputType="text"
+            android:padding="10dp"
+            android:background="@android:drawable/editbox_background_normal"
+            android:layout_marginBottom="3dp" />
+
+        <TextView
+            android:id="@+id/txtMonedaOrigen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Moneda Origen: Cargando..."
+            android:textColor="#2563EB"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="14dp" />
+
+        <!-- CUENTA DESTINO -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2. Cuenta Destino (Titular y Moneda):"
+            android:textColor="#1E293B"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="3dp" />
+
+        <Spinner
+            android:id="@+id/spinnerCuentaDestino"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:drawable/btn_dropdown"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/editTextCuentaDestino"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Cta. Destino (Ej. 00200002)"
+            android:inputType="text"
+            android:padding="10dp"
+            android:background="@android:drawable/editbox_background_normal"
+            android:layout_marginBottom="3dp" />
+
+        <TextView
+            android:id="@+id/txtMonedaDestino"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Moneda Destino: Cargando..."
+            android:textColor="#2563EB"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
+
+        <!-- ALERTA / VALIDACIÓN DE MONEDA -->
+        <TextView
+            android:id="@+id/txtAlertaCompatibilidad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Verificando compatibilidad de monedas..."
+            android:padding="8dp"
+            android:background="#EFF6FF"
+            android:textColor="#1E40AF"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp" />
+
+        <!-- IMPORTE -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3. Importe a Transferir:"
+            android:textColor="#1E293B"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/editTextImporte"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Ej. 100.00"
+            android:inputType="numberDecimal"
+            android:padding="10dp"
+            android:background="@android:drawable/editbox_background_normal"
+            android:layout_marginBottom="22dp" />
+
+        <Button
+            android:id="@+id/buttonTransferir"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/button_background"
+            android:text="REGISTRAR TRANSFERENCIA"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/buttonBack"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Volver al Menú"
+            android:textColor="#444444"
+            android:textSize="15sp"
+            android:layout_marginBottom="20dp" />
+
+    </LinearLayout>
+</ScrollView>

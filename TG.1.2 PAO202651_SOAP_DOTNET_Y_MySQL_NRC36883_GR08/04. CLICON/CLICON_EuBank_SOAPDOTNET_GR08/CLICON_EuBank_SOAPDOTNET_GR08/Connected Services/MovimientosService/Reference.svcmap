@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="5c094482-6b22-4b78-a7f3-5a1b5cfe0340" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:62278/Services/MovimientosService.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="MovimientosService.xsd" MetadataType="Schema" ID="842c0806-bef9-4274-91d0-a810f6fa37e0" SourceId="1" SourceUrl="http://localhost:62278/Services/MovimientosService.svc?xsd=xsd3" />
+    <MetadataFile FileName="MovimientosService1.xsd" MetadataType="Schema" ID="46421aac-a583-4714-95fb-65931854f33c" SourceId="1" SourceUrl="http://localhost:62278/Services/MovimientosService.svc?xsd=xsd2" />
+    <MetadataFile FileName="MovimientosService2.xsd" MetadataType="Schema" ID="2d663ba5-2b04-4d84-91ce-6b90ebb91da3" SourceId="1" SourceUrl="http://localhost:62278/Services/MovimientosService.svc?xsd=xsd1" />
+    <MetadataFile FileName="MovimientosService3.xsd" MetadataType="Schema" ID="6618134b-6bc4-4a1b-ab87-2bcd11ca270b" SourceId="1" SourceUrl="http://localhost:62278/Services/MovimientosService.svc?xsd=xsd0" />
+    <MetadataFile FileName="MovimientosService.wsdl" MetadataType="Wsdl" ID="840cdf9e-e8bc-40bc-a331-e776f9bfeeba" SourceId="1" SourceUrl="http://localhost:62278/Services/MovimientosService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,25 @@
+services:
+  mysql-eurekabank:
+    image: mysql:8.0
+    container_name: mysql-eurekabank-gr08
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: eurekabank
+      MYSQL_USER: Monster
+      MYSQL_PASSWORD: Monster9
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_eurekabank_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  mysql_eurekabank_data:
+    driver: local

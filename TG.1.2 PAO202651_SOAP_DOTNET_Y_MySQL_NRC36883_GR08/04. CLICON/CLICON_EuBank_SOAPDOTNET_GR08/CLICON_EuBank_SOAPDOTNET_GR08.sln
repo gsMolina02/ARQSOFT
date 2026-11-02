@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.5.11723.231 stable
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLICON_EuBank_SOAPDOTNET_GR08", "CLICON_EuBank_SOAPDOTNET_GR08\CLICON_EuBank_SOAPDOTNET_GR08.csproj", "{7DFF66A9-5AD0-4930-A6A5-305DD6EA3905}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7DFF66A9-5AD0-4930-A6A5-305DD6EA3905}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DFF66A9-5AD0-4930-A6A5-305DD6EA3905}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DFF66A9-5AD0-4930-A6A5-305DD6EA3905}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DFF66A9-5AD0-4930-A6A5-305DD6EA3905}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {567E367A-834F-4A9A-A2FE-7BECE06D8DCE}
+	EndGlobalSection
+EndGlobal

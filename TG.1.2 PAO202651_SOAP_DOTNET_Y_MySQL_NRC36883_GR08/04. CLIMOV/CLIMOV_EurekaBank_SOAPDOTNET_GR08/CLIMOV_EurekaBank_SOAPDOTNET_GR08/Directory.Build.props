@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('windows'))">
+    <BaseOutputPath>$([System.IO.Path]::Combine($([System.IO.Path]::GetTempPath()), 'EurekaMaui', 'SOAP', 'bin'))\</BaseOutputPath>
+    <BaseIntermediateOutputPath>$([System.IO.Path]::Combine($([System.IO.Path]::GetTempPath()), 'EurekaMaui', 'SOAP', 'obj'))\</BaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>$(BaseIntermediateOutputPath)</MSBuildProjectExtensionsPath>
+  </PropertyGroup>
+</Project>

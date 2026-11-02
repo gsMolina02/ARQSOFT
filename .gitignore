@@ -1,0 +1,24 @@
+# Archivos temporales de Office y logs
+~$*.docx
+~$*.xlsx
+*.tmp
+*.log
+
+# Android & Gradle
+.gradle/
+**/build/
+local.properties
+.idea/
+*.iml
+
+# .NET / Visual Studio
+**/bin/
+**/obj/
+**/.vs/
+**/packages/
+*.nupkg
+*.user
+*.suo
+
+# NetBeans Private
+**/nbproject/private/
