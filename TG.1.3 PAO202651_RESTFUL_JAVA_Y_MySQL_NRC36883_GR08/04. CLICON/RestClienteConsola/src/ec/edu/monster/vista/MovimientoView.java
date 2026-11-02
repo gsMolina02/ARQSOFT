@@ -16,7 +16,7 @@ import java.util.Scanner;
  */
 public class MovimientoView {
      public void realizarConsulta() {
-         Scanner scanner = new Scanner(System.in);
+         Scanner scanner = ec.edu.monster.restclienteconsola.RestClienteConsola.scanner;
 
         System.out.println("Bienvenido a la consola de consultas bancarias");
         System.out.print("Por favor ingrese su número de cuenta: ");

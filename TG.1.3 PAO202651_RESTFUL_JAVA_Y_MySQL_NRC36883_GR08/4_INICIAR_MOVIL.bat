@@ -66,7 +66,7 @@ if "%op%"=="4" (
 )
 
 if "%op%"=="5" (
-    call "%~dp0CONECTAR_CELULAR_INALAMBRICO.bat"
+    call "%~dp06_CONECTAR_CELULAR_WIFI.bat"
     goto :fin
 )
 

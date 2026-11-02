@@ -17,14 +17,14 @@ import ec.edu.monster.ws.CoreBancario.Response;
  */
 public class DepositoView {
       public void realizarDeposito() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = ec.edu.monster.restclienteconsola.RestClienteConsola.scanner;
 
         System.out.println("Bienvenido a la consola de depósitos bancarios");
         System.out.print("Por favor ingrese su número de cuenta: ");
         String cuenta = scanner.nextLine().trim();
 
         System.out.print("Ingrese el importe a depositar: ");
-        double importe = scanner.nextDouble();
+        double importe = Double.parseDouble(scanner.nextLine().trim());
 
         EurekaController controller = new EurekaController();
           Response response = controller.realizarDeposito(cuenta, importe);

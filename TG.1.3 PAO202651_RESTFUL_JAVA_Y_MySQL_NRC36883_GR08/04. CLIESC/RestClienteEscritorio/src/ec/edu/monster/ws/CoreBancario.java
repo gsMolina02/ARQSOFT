@@ -74,7 +74,7 @@ public class CoreBancario {
         } catch (Exception ignored) {}
 
         if (target == null || target.isEmpty()) {
-            return "https://exchange-por-bottom-exam.trycloudflare.com/Rest_EurekaBank/webresources/coreBancario";
+            return "http://localhost:8080/Rest_EurekaBank/webresources/coreBancario";
         }
 
         target = target.trim();

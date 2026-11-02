@@ -16,7 +16,7 @@ import ec.edu.monster.ws.CoreBancario.Response;
 public class RetiroView {
 
     public void realizarRetiro() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = ec.edu.monster.restclienteconsola.RestClienteConsola.scanner;
 
         System.out.println("Bienvenido a la consola de retiros bancarios");
         System.out.print("Por favor ingrese su número de cuenta: ");

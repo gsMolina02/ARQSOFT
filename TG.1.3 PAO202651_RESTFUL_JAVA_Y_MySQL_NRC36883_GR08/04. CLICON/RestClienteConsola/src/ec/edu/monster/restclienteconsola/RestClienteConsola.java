@@ -13,9 +13,9 @@ import java.util.Scanner;
  */
 public class RestClienteConsola {
 
-    public static void main(String[] args) {
+    public static Scanner scanner = new Scanner(System.in);
 
-        Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args) {
         MovimientoView consolaConsultas = new MovimientoView();
         RetiroView consolaRetiro = new RetiroView();
         TransferenciaView consolaTransferencia = new TransferenciaView();
@@ -51,6 +51,7 @@ public class RestClienteConsola {
         while (!salir) {
             mostrarMenu();
             int opcion = scanner.nextInt();
+            scanner.nextLine();
 
             switch (opcion) {
                 case 1:

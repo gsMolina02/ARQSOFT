@@ -197,9 +197,16 @@ public class LoginView extends javax.swing.JFrame {
         private Image imagen;
         
         public void paint(Graphics g){
-            imagen = new ImageIcon(getClass().getResource("/source/monsterg1.png")).getImage();
+            try {
+                java.net.URL url = getClass().getResource("/source/monsterg1.png");
+                if (url != null) {
+                    imagen = new ImageIcon(url).getImage();
+                }
+            } catch (Exception ignored) {}
             
-            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+            if (imagen != null) {
+                g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+            }
             
             setOpaque(false);
             super.paint(g);

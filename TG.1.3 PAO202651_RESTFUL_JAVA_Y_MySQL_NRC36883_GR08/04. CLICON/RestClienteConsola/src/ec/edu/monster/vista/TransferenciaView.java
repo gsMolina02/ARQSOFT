@@ -16,7 +16,7 @@ import ec.edu.monster.ws.CoreBancario.Response;
 public class TransferenciaView {
 
     public void realizarTransferencia() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = ec.edu.monster.restclienteconsola.RestClienteConsola.scanner;
 
         System.out.println("Bienvenido a la consola de transferencias bancarias");
         System.out.print("Por favor ingrese su número de cuenta de origen: ");

@@ -14,7 +14,7 @@ if %errorlevel% neq 0 (
     echo.
     echo   1. Cierre esta ventana.
     echo   2. Haga CLIC DERECHO sobre este archivo:
-    echo      DESBLOQUEAR_FIREWALL_ADMIN.bat
+    echo      5_DESBLOQUEAR_FIREWALL.bat
     echo   3. Seleccione: "Ejecutar como administrador"
     echo.
     echo ============================================================================
@@ -23,7 +23,7 @@ if %errorlevel% neq 0 (
 )
 
 echo ============================================================================
-echo   DESBLOQUEANDO CONEXION POR IP PARA OTRAS COMPUTADORAS (GRUPO 08)
+echo   DESBLOQUEANDO CONEXION POR RED LOCAL PARA OTRAS COMPUTADORAS (GRUPO 08)
 echo ============================================================================
 echo.
 
@@ -43,7 +43,7 @@ netsh advfirewall firewall add rule name="EurekaBank_REST_8080" dir=in action=al
 netsh advfirewall firewall delete rule name="EurekaBank_MySQL_3306" >nul 2>&1
 netsh advfirewall firewall add rule name="EurekaBank_MySQL_3306" dir=in action=allow protocol=TCP localport=3306 profile=any >nul 2>&1
 netsh advfirewall set allprofiles state off >nul 2>&1
-echo       [OK] Puerto 8080 y 3306 habilitados correctamente.
+echo       [OK] Puertos 8080 y 3306 habilitados correctamente.
 echo.
 
 echo [3/3] Configurando clientes locales...
@@ -59,7 +59,7 @@ echo   EN LA OTRA LAPTOP:
 echo   1. Abre el navegador y entra a:
 echo      http://%LOCAL_IP%:8080/RestClienteWeb/Login.jsp
 echo.
-echo   2. Para Escritorio en la otra laptop:
+echo   2. Para Escritorio / Consola en la otra laptop:
 echo      Ejecuta: CAMBIAR_IP_SERVIDOR.bat %LOCAL_IP%
 echo ============================================================================
 echo.

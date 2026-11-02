@@ -29,13 +29,13 @@ public class EurekaController extends HttpServlet {
         Object sessionIp = request.getSession().getAttribute("SERVER_IP");
         if (sessionIp != null && !sessionIp.toString().isEmpty()) {
             String h = sessionIp.toString();
-            return h.startsWith("http") ? h : "https://exchange-por-bottom-exam.trycloudflare.com/Rest_EurekaBank/webresources/coreBancario";
+            return h.startsWith("http") ? h : ("http://" + h + "/Rest_EurekaBank/webresources/coreBancario");
         }
         String envUrl = System.getenv("EUREKABANK_REST_URL");
         if (envUrl != null && !envUrl.trim().isEmpty()) {
             return envUrl.trim();
         }
-        return "https://exchange-por-bottom-exam.trycloudflare.com/Rest_EurekaBank/webresources/coreBancario";
+        return "http://localhost:8080/Rest_EurekaBank/webresources/coreBancario";
     }
 
     @Override
