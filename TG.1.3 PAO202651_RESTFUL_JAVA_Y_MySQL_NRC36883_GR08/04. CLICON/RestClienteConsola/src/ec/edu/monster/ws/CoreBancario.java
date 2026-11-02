@@ -1,4 +1,4 @@
-﻿package ec.edu.monster.ws;
+package ec.edu.monster.ws;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
