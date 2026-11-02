@@ -35,7 +35,7 @@ public class EurekaController extends HttpServlet {
         if (envUrl != null && !envUrl.trim().isEmpty()) {
             return envUrl.trim();
         }
-        return "http://localhost:8080/Rest_EurekaBank/webresources/coreBancario";
+        return "https://adware-expect-degree-november.trycloudflare.com/Rest_EurekaBank/webresources/coreBancario";
     }
 
     @Override
