@@ -6,18 +6,31 @@ echo   EUREKABANK SOAP .NET - CLIENTE MOVIL .NET MAUI (GRUPO 08)
 echo ============================================================================
 echo.
 
-set "ANDROID_SDK_ROOT=C:\Users\danie\AppData\Local\Android\Sdk"
-set "PATH=C:\Users\danie\AppData\Local\Android\Sdk\platform-tools;%PATH%"
-cd /d "%~dp0CLIMOV_EurekaBank_SOAPDOTNET_GR08\CLIMOV_EurekaBank_SOAPDOTNET_GR08"
+if exist "%LOCALAPPDATA%\Android\Sdk" (
+    set "ANDROID_SDK_ROOT=%LOCALAPPDATA%\Android\Sdk"
+    set "PATH=%LOCALAPPDATA%\Android\Sdk\platform-tools;%PATH%"
+)
+
+set "MAUI_DIR=%~dp0CLIMOV_EurekaBank_SOAPDOTNET_GR08\CLIMOV_EurekaBank_SOAPDOTNET_GR08"
+if not exist "%MAUI_DIR%" (
+    echo [ERROR] No se encontro la carpeta del cliente MAUI en:
+    echo         "%MAUI_DIR%"
+    pause
+    exit /b 1
+)
+cd /d "%MAUI_DIR%"
 
 :: 1. Detectar dispositivos ADB
 echo [1/2] Detectando dispositivos Android...
-adb devices
+where adb >nul 2>&1
+if %errorlevel% equ 0 (
+    adb devices
+    adb reverse tcp:62278 tcp:62278 >nul 2>&1
+    adb reverse tcp:5150 tcp:5150 >nul 2>&1
+) else (
+    echo       [AVISO] adb no esta en el PATH o no se detecto Android SDK.
+)
 echo.
-
-:: 2. Configurar reverse ports para depuracion
-adb reverse tcp:62278 tcp:62278 >nul 2>&1
-adb reverse tcp:5150 tcp:5150 >nul 2>&1
 
 echo ============================================================================
 echo   OPCIONES DISPONIBLES:

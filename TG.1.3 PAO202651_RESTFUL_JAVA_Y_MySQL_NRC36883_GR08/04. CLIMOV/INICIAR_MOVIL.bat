@@ -6,8 +6,10 @@ echo   EUREKABANK RESTFUL JAVA - CLIENTE MOVIL ANDROID (GRUPO 08)
 echo ============================================================================
 echo.
 
-set "ANDROID_SDK_ROOT=C:\Users\danie\AppData\Local\Android\Sdk"
-set "PATH=C:\Users\danie\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\Android\Android Studio\bin;%PATH%"
+if exist "%LOCALAPPDATA%\Android\Sdk" (
+    set "ANDROID_SDK_ROOT=%LOCALAPPDATA%\Android\Sdk"
+    set "PATH=%LOCALAPPDATA%\Android\Sdk\platform-tools;C:\Program Files\Android\Android Studio\bin;%PATH%"
+)
 cd /d "%~dp0RestClienteMovil"
 
 :: 1. Detectar dispositivos ADB
@@ -71,3 +73,4 @@ if "%op%"=="5" (
 )
 
 :fin
+

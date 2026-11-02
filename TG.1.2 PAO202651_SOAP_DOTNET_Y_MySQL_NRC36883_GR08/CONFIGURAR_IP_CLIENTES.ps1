@@ -6,10 +6,13 @@ param(
 $ErrorActionPreference = "SilentlyContinue"
 $RootDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 
-# Normalizar TargetUrl y CleanHost
-$NuevaIP = $NuevaIP.Trim()
+# Sanitizar entrada (quitar comillas, espacios y sufijos de servicio si los pegaron por error)
+$NuevaIP = $NuevaIP.Trim().Trim('"').Trim("'")
+$NuevaIP = $NuevaIP -replace '(?i)/services(/.*)?$', ''
+$NuevaIP = $NuevaIP.TrimEnd('/')
+
 if ($NuevaIP -match "^https?://") {
-    $TargetUrl = $NuevaIP.TrimEnd('/')
+    $TargetUrl = $NuevaIP
     $CleanHost = $TargetUrl
     $IsHttps = $TargetUrl.StartsWith("https://", [System.StringComparison]::OrdinalIgnoreCase)
 } else {
@@ -39,7 +42,8 @@ $cliconConfigs = @(
 foreach ($cfg in $cliconConfigs) {
     if (Test-Path $cfg) {
         $c = [System.IO.File]::ReadAllText($cfg, [System.Text.Encoding]::UTF8)
-        $c = $c -replace 'https?://[^/:]+(:\d+)?/Services', "${TargetUrl}/Services"
+        $c = $c -replace 'https?://[^"''<>\s]+/LoginService\.svc', "${TargetUrl}/Services/LoginService.svc"
+        $c = $c -replace 'https?://[^"''<>\s]+/MovimientosService\.svc', "${TargetUrl}/Services/MovimientosService.svc"
         $c = $c -replace '<security mode="(None|Transport)"\s*/>', "<security mode=""$SecMode"" />"
         [System.IO.File]::WriteAllText($cfg, $c, $utf8NoBom)
         Write-Host "[OK] Actualizado CLICON: $cfg" -ForegroundColor Green
@@ -54,7 +58,8 @@ $cliescConfigs = @(
 foreach ($cfg in $cliescConfigs) {
     if (Test-Path $cfg) {
         $c = [System.IO.File]::ReadAllText($cfg, [System.Text.Encoding]::UTF8)
-        $c = $c -replace 'https?://[^/:]+(:\d+)?/Services', "${TargetUrl}/Services"
+        $c = $c -replace 'https?://[^"''<>\s]+/LoginService\.svc', "${TargetUrl}/Services/LoginService.svc"
+        $c = $c -replace 'https?://[^"''<>\s]+/MovimientosService\.svc', "${TargetUrl}/Services/MovimientosService.svc"
         $c = $c -replace '<security mode="(None|Transport)"\s*/>', "<security mode=""$SecMode"" />"
         [System.IO.File]::WriteAllText($cfg, $c, $utf8NoBom)
         Write-Host "[OK] Actualizado CLIESC: $cfg" -ForegroundColor Green

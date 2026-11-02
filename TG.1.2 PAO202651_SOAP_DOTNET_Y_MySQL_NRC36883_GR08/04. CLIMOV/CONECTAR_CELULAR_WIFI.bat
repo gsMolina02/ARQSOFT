@@ -6,7 +6,9 @@ echo   EUREKABANK SOAP .NET - CONEXION INALAMBRICA WI-FI (GRUPO 08)
 echo ============================================================================
 echo.
 
-set "PATH=C:\Users\danie\AppData\Local\Android\Sdk\platform-tools;%PATH%"
+if exist "%LOCALAPPDATA%\Android\Sdk\platform-tools" (
+    set "PATH=%LOCALAPPDATA%\Android\Sdk\platform-tools;%PATH%"
+)
 
 echo [1/3] Detectando celular en la red Wi-Fi...
 set "PHONE_IP=192.168.100.33"

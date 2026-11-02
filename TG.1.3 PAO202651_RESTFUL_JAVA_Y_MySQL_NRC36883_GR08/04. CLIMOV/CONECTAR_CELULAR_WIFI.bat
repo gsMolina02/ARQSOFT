@@ -6,7 +6,9 @@ echo   EUREKABANK RESTFUL JAVA - CONEXION INALAMBRICA WI-FI (GRUPO 08)
 echo ============================================================================
 echo.
 
-set "PATH=C:\Users\danie\AppData\Local\Android\Sdk\platform-tools;%PATH%"
+if exist "%LOCALAPPDATA%\Android\Sdk\platform-tools" (
+    set "PATH=%LOCALAPPDATA%\Android\Sdk\platform-tools;%PATH%"
+)
 
 echo [1/4] Verificando servidor Payara RESTful...
 powershell -Command "try { $r = Invoke-WebRequest -Uri 'http://127.0.0.1:8080/Rest_EurekaBank/webresources/coreBancario/cuentas' -TimeoutSec 2 -UseBasicParsing; Write-Host '      [OK] Servidor Payara RESTful activo y respondiendo.' -ForegroundColor Green } catch { Write-Host '      [AVISO] Servidor Payara en puerto 8080 no detectado.' -ForegroundColor Yellow }"
@@ -54,3 +56,4 @@ echo   PUEDES DESCONECTAR EL CABLE USB EN CUALQUIER MOMENTO.
 echo ============================================================================
 echo.
 pause
+

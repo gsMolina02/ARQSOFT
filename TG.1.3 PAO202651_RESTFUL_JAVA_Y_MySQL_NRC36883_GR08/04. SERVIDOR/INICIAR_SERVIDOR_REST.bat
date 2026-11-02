@@ -3,7 +3,7 @@ chcp 65001 >nul
 title EurekaBank RESTful Java - Iniciar Servidor (Payara + MySQL)
 echo ============================================================================
 echo   INICIANDO SERVIDOR RESTFUL JAVA EUREKABANK (GRUPO 08)
-echo   Puerto HTTP: 8080 | Base de Datos: MySQL 8.0 (3306)
+echo   Puerto HTTP: 8080 ^| Base de Datos: MySQL 8.0 (3306)
 echo   Autores: Gustavo Molina y Daniela Tituaña - NRC 36883
 echo ============================================================================
 echo.
@@ -44,3 +44,4 @@ echo ===========================================================================
 echo Abriendo endpoint de prueba en el navegador...
 start "" "http://localhost:8080/Rest_EurekaBank/webresources/coreBancario/movimientos/00100001"
 pause
+

@@ -26,6 +26,9 @@ if (-not $listeningWeb) {
 # 3. Localizar binario de cloudflared
 $cloudflaredPath = "C:\Program Files (x86)\cloudflared\cloudflared.exe"
 if (-not (Test-Path $cloudflaredPath)) {
+    $cloudflaredPath = "C:\Program Files\cloudflared\cloudflared.exe"
+}
+if (-not (Test-Path $cloudflaredPath)) {
     $cloudflaredPath = (Get-Command "cloudflared.exe" -ErrorAction SilentlyContinue).Source
 }
 
@@ -64,8 +67,6 @@ while (-not $process.HasExited -and -not $tunnelUrl) {
 
 if ($tunnelUrl) {
     $webUrl = "$tunnelUrl/"
-    $loginSvcUrl = "$tunnelUrl/Services/LoginService.svc"
-    $movSvcUrl = "$tunnelUrl/Services/MovimientosService.svc"
 
     # Actualizar configuraciones de clientes locales (servidor_ip.txt, App.config, etc.)
     & "$RootDir\CONFIGURAR_IP_CLIENTES.ps1" -NuevaIP $tunnelUrl | Out-Null
@@ -76,21 +77,22 @@ if ($tunnelUrl) {
 
     Write-Host ""
     Write-Host "============================================================================" -ForegroundColor Green
-    Write-Host "  ¡TUNEL Y CLIENTE WEB SOAP .NET LISTOS Y EN LINEA!" -ForegroundColor Green
+    Write-Host "  ¡TUNEL CLOUD Y CLIENTES SOAP .NET LISTOS Y EN LINEA!" -ForegroundColor Green
     Write-Host "============================================================================" -ForegroundColor Green
     Write-Host ""
-    Write-Host "  [WEB] Portal Web ASP.NET Core en la nube: " -ForegroundColor Cyan
-    Write-Host "        $webUrl" -ForegroundColor Yellow
-    Write-Host "        (Se acaba de abrir en tu navegador y copiar a tu portapapeles)" -ForegroundColor Gray
+    Write-Host "  [1] ACCESO AL PORTAL WEB (En tu laptop, otra PC o Celular):" -ForegroundColor Cyan
+    Write-Host "      $webUrl" -ForegroundColor Yellow
+    Write-Host "      (Se abrio automaticamente en tu navegador y se copio al portapapeles)" -ForegroundColor Gray
     Write-Host ""
-    Write-Host "  [SOAP] Servicios WCF disponibles: " -ForegroundColor Cyan
-    Write-Host "        LoginService       : $loginSvcUrl" -ForegroundColor Yellow
-    Write-Host "        MovimientosService : $movSvcUrl" -ForegroundColor Yellow
+    Write-Host "  [2] CLIENTES LOCALES (Escritorio y Consola en esta PC):" -ForegroundColor Cyan
+    Write-Host "      ¡Ya quedaron configurados automaticamente para conectarse al tunel!" -ForegroundColor Green
+    Write-Host "      Solo abre [1] ESCRITORIO o [2] CONSOLA desde MENU_PRINCIPAL." -ForegroundColor Green
     Write-Host ""
-    Write-Host "  EN CUALQUIER OTRA COMPUTADORA O CELULAR (Incluso en la ESPE o con datos):" -ForegroundColor White
-    Write-Host "  1. Para Web: Abre la URL de arriba en cualquier navegador." -ForegroundColor Gray
-    Write-Host "  2. Para Escritorio / Consola: Ejecuta: CAMBIAR_IP_SERVIDOR.bat $tunnelUrl" -ForegroundColor Gray
-    Write-Host "  3. Para App Movil MAUI: Pega $tunnelUrl en el campo Servidor al iniciar sesion." -ForegroundColor Gray
+    Write-Host "  [3] EN OTRA LAPTOP (Para Escritorio o Consola en otra laptop):" -ForegroundColor Cyan
+    Write-Host "      Ejecuta en esa laptop: CAMBIAR_IP_SERVIDOR.bat $tunnelUrl" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "  [4] EN LA APP MOVIL (.NET MAUI):" -ForegroundColor Cyan
+    Write-Host "      Pega esta URL en el campo Servidor: $tunnelUrl" -ForegroundColor Yellow
     Write-Host ""
     Write-Host "  IMPORTANTE: Manten esta ventana abierta mientras uses la conexion." -ForegroundColor Magenta
     Write-Host "============================================================================" -ForegroundColor Green
