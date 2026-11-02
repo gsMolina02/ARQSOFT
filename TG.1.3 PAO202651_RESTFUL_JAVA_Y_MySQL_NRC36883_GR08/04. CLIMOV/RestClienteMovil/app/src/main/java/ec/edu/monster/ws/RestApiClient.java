@@ -1,5 +1,7 @@
 package ec.edu.monster.ws;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,12 +18,13 @@ import ec.edu.monster.modelo.Movimiento;
 
 /**
  * Cliente HTTP/JSON RESTful para Android (EurekaBank Grupo 08).
- * Diseñado con failover automático entre Wi-Fi LAN (192.168.100.15:8080)
- * y túnel USB ADB Reverse (127.0.0.1:8080 / localhost:8080).
+ * Soporta conexión completamente inalámbrica vía Wi-Fi LAN, Hotspot o Cloudflare Tunnel.
  */
 public class RestApiClient {
 
     private static final String TAG = "RestApiClient";
+    private static final String PREFS_NAME = "EurekaBankPrefs";
+    private static final String KEY_SERVER = "server_host";
 
     // Host activo actual
     private static volatile String activeHost = "192.168.100.15:8080";
@@ -34,9 +37,29 @@ public class RestApiClient {
         "10.0.2.2:8080"
     };
 
+    public static void init(Context context) {
+        if (context != null) {
+            SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+            String saved = prefs.getString(KEY_SERVER, null);
+            if (saved != null && !saved.trim().isEmpty()) {
+                activeHost = saved.trim();
+            }
+        }
+    }
+
+    public static void saveServerHost(Context context, String host) {
+        if (host != null && !host.trim().isEmpty()) {
+            activeHost = host.trim();
+            if (context != null) {
+                SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+                prefs.edit().putString(KEY_SERVER, activeHost).apply();
+            }
+        }
+    }
+
     public static void setServerHost(String host) {
         if (host != null && !host.trim().isEmpty()) {
-            activeHost = host.trim().contains(":") ? host.trim() : host.trim() + ":8080";
+            activeHost = host.trim();
         }
     }
 
@@ -44,12 +67,40 @@ public class RestApiClient {
         return activeHost;
     }
 
-    public static String getBaseUrl() {
-        return "http://" + activeHost + "/Rest_EurekaBank/webresources/coreBancario";
+    public static String buildUrl(String host, String path) {
+        if (host == null || host.trim().isEmpty()) {
+            host = "192.168.100.15:8080";
+        }
+        host = host.trim();
+        if (host.startsWith("http://") || host.startsWith("https://")) {
+            String base = host.endsWith("/") ? host.substring(0, host.length() - 1) : host;
+            if (!base.contains("coreBancario")) {
+                base += "/Rest_EurekaBank/webresources/coreBancario";
+            }
+            return base + path;
+        }
+        String cleanHost = host.contains(":") ? host : host + ":8080";
+        return "http://" + cleanHost + "/Rest_EurekaBank/webresources/coreBancario" + path;
     }
 
-    private static String buildUrl(String host, String path) {
-        return "http://" + host + "/Rest_EurekaBank/webresources/coreBancario" + path;
+    public static String getBaseUrl() {
+        return buildUrl(activeHost, "");
+    }
+
+    public static boolean testConnection(String host) {
+        try {
+            String testUrl = buildUrl(host, "/cuentas");
+            URL url = new URL(testUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setConnectTimeout(4000);
+            conn.setReadTimeout(4000);
+            int code = conn.getResponseCode();
+            return code >= 200 && code < 400;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public static boolean validarIngreso(String usuario, String clave) {
@@ -62,7 +113,6 @@ public class RestApiClient {
             return json.optBoolean("success", false);
         } catch (Exception e) {
             Log.e(TAG, "Error durante validarIngreso REST: " + e.getMessage());
-            // Fallback seguro si no hay red disponible en el momento
             boolean esMonster = ("MONSTER".equalsIgnoreCase(usuario) || "monster".equalsIgnoreCase(usuario))
                              && ("MONSTER9".equalsIgnoreCase(clave) || "Monster9".equals(clave));
             boolean esCromero = "cromero".equalsIgnoreCase(usuario) && "chicho".equals(clave);
@@ -207,7 +257,7 @@ public class RestApiClient {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
-        conn.setConnectTimeout(3000);
+        conn.setConnectTimeout(4000);
         conn.setReadTimeout(5000);
         int responseCode = conn.getResponseCode();
         if (responseCode != HttpURLConnection.HTTP_OK) {
@@ -229,7 +279,7 @@ public class RestApiClient {
         conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
         conn.setRequestProperty("Accept", "application/json");
         conn.setDoOutput(true);
-        conn.setConnectTimeout(3000);
+        conn.setConnectTimeout(4000);
         conn.setReadTimeout(5000);
         try (OutputStream os = conn.getOutputStream()) {
             os.write(jsonBody.getBytes(StandardCharsets.UTF_8));
