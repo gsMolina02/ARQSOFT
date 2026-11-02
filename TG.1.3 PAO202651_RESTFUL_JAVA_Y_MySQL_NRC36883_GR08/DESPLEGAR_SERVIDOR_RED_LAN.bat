@@ -2,11 +2,20 @@
 chcp 65001 >nul
 title EurekaBank RESTful Java - Despliegue en Red Local LAN (GR08)
 
-:: Solicitar permisos de Administrador automaticamente si no los tiene
-net session >nul 2>&1
-if %errorLevel% neq 0 (
-    echo Solicitando permisos de Administrador para configurar la red...
-    powershell -Command "Start-Process '%~0' -Verb RunAs"
+:: Verificar permisos de Administrador de forma segura
+fltmc >nul 2>&1
+if %errorlevel% neq 0 (
+    cls
+    echo ============================================================================
+    echo   [!] ATENCION: SE REQUIEREN PERMISOS DE ADMINISTRADOR
+    echo ============================================================================
+    echo.
+    echo   Para aplicar las reglas del Firewall de Windows:
+    echo   1. Haga CLIC DERECHO sobre este archivo.
+    echo   2. Seleccione: "Ejecutar como administrador".
+    echo.
+    echo ============================================================================
+    pause
     exit /b
 )
 
@@ -16,7 +25,7 @@ echo   Autores: Gustavo Molina y Daniela Tituana - NRC 36883
 echo ============================================================================
 echo.
 
-:: Detectar IP real de la tarjeta Wi-Fi (evitando adaptadores virtuales como VirtualBox)
+:: Detectar IP real de la tarjeta Wi-Fi
 for /f "tokens=*" %%a in ('powershell -Command "(Get-NetIPAddress -InterfaceAlias 'Wi-Fi' -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress"') do (
     set "LOCAL_IP=%%a"
 )
