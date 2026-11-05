@@ -24,7 +24,7 @@
             background: rgba(255, 255, 255, 0.98);
             border-radius: 24px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
-            max-width: 440px;
+            max-width: 420px;
             width: 100%;
             padding: 40px 36px;
             text-align: center;
@@ -33,25 +33,26 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
         .brand-header {
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
         .avatar-wrap {
-            width: 86px;
-            height: 86px;
-            margin: 0 auto 12px;
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 14px;
             background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 16px rgba(14, 116, 144, 0.2);
-            border: 3px solid #FFFFFF;
+            box-shadow: 0 10px 20px rgba(14, 116, 144, 0.2);
+            border: 3.5px solid #FFFFFF;
+            overflow: hidden;
         }
         .avatar-wrap img {
-            width: 62px;
-            height: 62px;
+            width: 74px;
+            height: 74px;
             object-fit: contain;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.12));
         }
         h1 {
             font-size: 24px;
@@ -67,20 +68,20 @@
         }
         .form-group {
             text-align: left;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
         label {
             display: block;
             font-size: 12px;
             font-weight: 700;
             color: #334155;
-            margin-bottom: 6px;
+            margin-bottom: 7px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        input, select {
+        input {
             width: 100%;
-            padding: 12px 14px;
+            padding: 13px 15px;
             font-size: 14px;
             font-family: inherit;
             color: #0F172A;
@@ -89,47 +90,11 @@
             border-radius: 12px;
             transition: all 0.2s ease;
         }
-        input:focus, select:focus {
+        input:focus {
             background: #FFFFFF;
             border-color: #0E7490;
             outline: none;
             box-shadow: 0 0 0 3px rgba(14, 116, 144, 0.15);
-        }
-        .quick-accounts {
-            margin: 18px 0;
-            padding: 12px;
-            background: #F1F5F9;
-            border-radius: 14px;
-            text-align: left;
-        }
-        .quick-accounts span {
-            font-size: 11px;
-            font-weight: 700;
-            color: #64748B;
-            display: block;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-        .pill-row {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-        .pill {
-            background: #FFFFFF;
-            border: 1px solid #CBD5E1;
-            padding: 6px 10px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 600;
-            color: #334155;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-        .pill:hover {
-            border-color: #0E7490;
-            color: #0E7490;
-            background: #F0FDF4;
         }
         .btn-submit {
             width: 100%;
@@ -164,7 +129,7 @@
             border: 1px solid #FCA5A5;
         }
         .footer-info {
-            margin-top: 20px;
+            margin-top: 24px;
             font-size: 11px;
             color: #94A3B8;
             font-weight: 500;
@@ -175,7 +140,7 @@
     <div class="login-card">
         <div class="brand-header">
             <div class="avatar-wrap">
-                <img src="images/sullivan.png" alt="Sullivan Monster Inc" />
+                <img src="${pageContext.request.contextPath}/images/sullivan.png" alt="Sullivan Monster" onerror="this.onerror=null; this.src='images/sullivan.png';" />
             </div>
             <h1>EurekaBank Web</h1>
             <p class="subtitle">Banca Digital RESTful (NRC 36883 - Grupo 08)</p>
@@ -186,34 +151,12 @@
         <form id="loginForm" onsubmit="realizarLogin(event)">
             <div class="form-group">
                 <label>Usuario:</label>
-                <input type="text" id="txtUsuario" name="usuario" value="MONSTER" required />
+                <input type="text" id="txtUsuario" name="usuario" placeholder="Ej. MONSTER o cromero" required autocomplete="username" />
             </div>
 
             <div class="form-group">
                 <label>Contraseña:</label>
-                <input type="password" id="txtClave" name="clave" value="MONSTER9" required />
-            </div>
-
-            <div class="form-group">
-                <label>Mi Cuenta Personal (Asociada):</label>
-                <select id="selCuenta" name="cuentaElegida">
-                    <option value="00100001" selected>00100001 - Juan Carlos García López (Soles)</option>
-                    <option value="00300001">00300001 - Eduardo Mauricio Campaña Ortega (Soles)</option>
-                    <option value="00200002">00200002 - Daniela Lissette Tituaña Moreno (Soles)</option>
-                    <option value="00200001">00200001 - Gustavo Stiven Molina Guaico (Soles)</option>
-                    <option value="00100002">00100002 - María Fernanda Rodríguez Torres (Soles)</option>
-                    <option value="00300002">00300002 - Eduardo Campaña (Dólares)</option>
-                </select>
-            </div>
-
-            <div class="quick-accounts">
-                <span>⚡ Credenciales Rápidas:</span>
-                <div class="pill-row">
-                    <button type="button" class="pill" onclick="setCredenciales('MONSTER', 'MONSTER9', '00300001')">👤 MONSTER (Eduardo)</button>
-                    <button type="button" class="pill" onclick="setCredenciales('cromero', 'chicho', '00100001')">👤 cromero (Juan C.)</button>
-                    <button type="button" class="pill" onclick="setCredenciales('MONSTER', 'MONSTER9', '00200002')">👤 Daniela Tituaña</button>
-                    <button type="button" class="pill" onclick="setCredenciales('MONSTER', 'MONSTER9', '00200001')">👤 Gustavo Molina</button>
-                </div>
+                <input type="password" id="txtClave" name="clave" placeholder="••••••••" required autocomplete="current-password" />
             </div>
 
             <button type="submit" id="btnIngresar" class="btn-submit">Ingresar a la Banca Web</button>
@@ -225,12 +168,6 @@
     </div>
 
     <script>
-        function setCredenciales(u, c, cta) {
-            document.getElementById("txtUsuario").value = u;
-            document.getElementById("txtClave").value = c;
-            document.getElementById("selCuenta").value = cta;
-        }
-
         function realizarLogin(e) {
             e.preventDefault();
             var btn = document.getElementById("btnIngresar");
@@ -241,13 +178,11 @@
 
             var u = document.getElementById("txtUsuario").value.trim();
             var c = document.getElementById("txtClave").value.trim();
-            var cta = document.getElementById("selCuenta").value;
 
             var params = new URLSearchParams();
             params.append("accion", "login");
             params.append("usuario", u);
             params.append("clave", c);
-            params.append("cuentaElegida", cta);
 
             fetch("EurekaController", {
                 method: "POST",
