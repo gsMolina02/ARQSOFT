@@ -13,6 +13,11 @@ local.properties
 
 # .NET / Visual Studio
 **/bin/
+!**/CLIESC_EuBank_SOAPDOTNET_GR08/bin/
+!**/CLIESC_EuBank_SOAPDOTNET_GR08/bin/**
+!**/CLICON_EuBank_SOAPDOTNET_GR08/**/bin/
+!**/CLICON_EuBank_SOAPDOTNET_GR08/**/bin/**
+*.pdb
 **/obj/
 **/.vs/
 **/packages/
