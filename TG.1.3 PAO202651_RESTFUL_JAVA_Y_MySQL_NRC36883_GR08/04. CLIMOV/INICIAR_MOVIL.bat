@@ -17,7 +17,7 @@ echo [1/3] Detectando dispositivos / emuladores conectados...
 adb devices
 echo.
 
-:: 2. Configurar reverse port forwarding para depuración USB si hay dispositivo
+:: 2. Configurar reverse port forwarding para depuraci?n USB si hay dispositivo
 adb reverse tcp:8080 tcp:8080 >nul 2>&1
 if %errorlevel% equ 0 (
     echo       [OK] Puerto 8080 redirigido por USB (adb reverse tcp:8080 tcp:8080).
@@ -30,7 +30,7 @@ echo   [1] Instalar y ejecutar en el dispositivo conectado (installDebug)
 echo   [2] Compilar APK Debug (gradlew assembleDebug)
 echo   [3] Abrir proyecto en Android Studio
 echo   [4] Configurar IP del servidor (Wi-Fi LAN)
-echo   [5] Conectar celular 100%% inalámbrico por Wi-Fi (sin cables)
+echo   [5] Conectar celular 100%% inal?mbrico por Wi-Fi (sin cables)
 echo ============================================================================
 echo.
 set /p op="Seleccione una opcion (1-5): "

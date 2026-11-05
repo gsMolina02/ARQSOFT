@@ -1,6 +1,6 @@
 @echo off
 chcp 65001 >nul
-title Conectar Celular Inalámbrico por Wi-Fi (EurekaBank GR08)
+title Conectar Celular Inal?mbrico por Wi-Fi (EurekaBank GR08)
 echo ============================================================================
 echo   EUREKABANK RESTFUL JAVA - CONEXION INALAMBRICA WI-FI (GRUPO 08)
 echo ============================================================================
