@@ -1,0 +1,32 @@
+@model CambioContraseniaModelo
+@{
+    ViewData["Title"] = "Cambiar contraseña";
+}
+
+<section class="tarjeta tarjeta-centrada">
+    <div class="tarjeta-encabezado">
+        <h1 class="titulo-seccion">Cambiar contraseña</h1>
+        <p class="texto-tenue">Mínimo 6 caracteres y diferente a la contraseña actual</p>
+    </div>
+
+    <form asp-action="CambiarContrasenia" method="post" class="formulario" data-bloquear-envio="Guardando...">
+        <label for="ContraseniaActual" class="etiqueta">Contraseña actual</label>
+        <partial name="_CampoContrasenia" model='("ContraseniaActual", "ContraseniaActual", "Escriba su contraseña actual")' />
+
+        <label for="ContraseniaNueva" class="etiqueta">Nueva contraseña</label>
+        <partial name="_CampoContrasenia" model='("ContraseniaNueva", "ContraseniaNueva", "Escriba la nueva contraseña")' />
+
+        <label for="Confirmacion" class="etiqueta">Confirmar nueva contraseña</label>
+        <partial name="_CampoContrasenia" model='("Confirmacion", "Confirmacion", "Repita la nueva contraseña")' />
+
+        @if (!string.IsNullOrEmpty(Model.Error))
+        {
+            <div class="mensaje-error" role="alert">@Model.Error</div>
+        }
+
+        <div class="fila-botones">
+            <a class="boton boton-secundario" asp-controller="Operaciones" asp-action="Index">Cancelar</a>
+            <button type="submit" class="boton boton-primario">Guardar cambios</button>
+        </div>
+    </form>
+</section>

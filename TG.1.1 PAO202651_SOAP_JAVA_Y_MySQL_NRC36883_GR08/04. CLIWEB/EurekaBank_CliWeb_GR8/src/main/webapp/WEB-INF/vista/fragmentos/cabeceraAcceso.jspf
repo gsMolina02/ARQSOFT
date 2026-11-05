@@ -1,0 +1,23 @@
+<%-- Inicio de las páginas sin sesión (inicio de sesión y configurar servidor): imagen a la izquierda --%>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><c:out value="${titulo}" /> - EurekaBank GR08</title>
+    <link rel="icon" href="${raiz}/favicon.ico" />
+    <link rel="stylesheet" href="${raiz}/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="${raiz}/css/site.css" />
+</head>
+<body class="cuerpo-acceso">
+<div class="acceso">
+    <aside class="acceso-lateral">
+        <img class="acceso-imagen" src="${raiz}/img/sullivan.jpg" alt="Sullivan, mascota del grupo, en el estadio" />
+        <div class="acceso-marca">
+            <h1>EurekaBank SOAP GR08</h1>
+            <p>Sistema de Cuentas de Ahorro<br />Movimientos · Depósitos · Retiros · Transferencias</p>
+        </div>
+    </aside>
+
+    <section class="acceso-formulario">
+        <div class="acceso-caja">

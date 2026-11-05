@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8'?><definitions xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.monster.edu.ec/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://ws.monster.edu.ec/" name="WSEurekaBank">
+<types>
+<xsd:schema>
+<xsd:import namespace="http://ws.monster.edu.ec/" schemaLocation="WSEurekaBank.xsd"/>
+</xsd:schema>
+</types>
+<message name="consultarMovimientos">
+<part name="parameters" element="tns:consultarMovimientos"/>
+</message>
+<message name="consultarMovimientosResponse">
+<part name="parameters" element="tns:consultarMovimientosResponse"/>
+</message>
+<message name="registrarTransferencia">
+<part name="parameters" element="tns:registrarTransferencia"/>
+</message>
+<message name="registrarTransferenciaResponse">
+<part name="parameters" element="tns:registrarTransferenciaResponse"/>
+</message>
+<message name="iniciarSesion">
+<part name="parameters" element="tns:iniciarSesion"/>
+</message>
+<message name="iniciarSesionResponse">
+<part name="parameters" element="tns:iniciarSesionResponse"/>
+</message>
+<message name="listarCuentas">
+<part name="parameters" element="tns:listarCuentas"/>
+</message>
+<message name="listarCuentasResponse">
+<part name="parameters" element="tns:listarCuentasResponse"/>
+</message>
+<message name="cerrarSesion">
+<part name="parameters" element="tns:cerrarSesion"/>
+</message>
+<message name="cerrarSesionResponse">
+<part name="parameters" element="tns:cerrarSesionResponse"/>
+</message>
+<message name="registrarDeposito">
+<part name="parameters" element="tns:registrarDeposito"/>
+</message>
+<message name="registrarDepositoResponse">
+<part name="parameters" element="tns:registrarDepositoResponse"/>
+</message>
+<message name="registrarRetiro">
+<part name="parameters" element="tns:registrarRetiro"/>
+</message>
+<message name="registrarRetiroResponse">
+<part name="parameters" element="tns:registrarRetiroResponse"/>
+</message>
+<message name="cambiarClave">
+<part name="parameters" element="tns:cambiarClave"/>
+</message>
+<message name="cambiarClaveResponse">
+<part name="parameters" element="tns:cambiarClaveResponse"/>
+</message>
+<portType name="WSEurekaBank">
+<operation name="consultarMovimientos">
+<input wsam:Action="http://ws.monster.edu.ec/WSEurekaBank/consultarMovimientosRequest" message="tns:consultarMovimientos"/>
+<output wsam:Action="http://ws.monster.edu.ec/WSEurekaBank/consultarMovimientosResponse" message="tns:consultarMovimientosResponse"/>
+</operation>
+<operation name="registrarTransferencia">
+<input wsam:Action="http://ws.monster.edu.ec/WSEurekaBank/registrarTransferenciaRequest" message="tns:registrarTransferencia"/>
+<output wsam:Action="http://ws.monster.edu.ec/WSEurekaBank/registrarTransferenciaResponse" message="tns:registrarTransferenciaResponse"/>
+</operation>
+<operation name="iniciarSesion">
+<input wsam:Action="http://ws.monster.edu.ec/WSEurekaBank/iniciarSesionRequest" message="tns:iniciarSesion"/>
+<output wsam:Action="http://ws.monster.edu.ec/WSEurekaBank/iniciarSesionResponse" message="tns:iniciarSesionResponse"/>
+</operation>
+<operation name="listarCuentas">
+<input wsam:Action="http://ws.monster.edu.ec/WSEurekaBank/listarCuentasRequest" message="tns:listarCuentas"/>
+<output wsam:Action="http://ws.monster.edu.ec/WSEurekaBank/listarCuentasResponse" message="tns:listarCuentasResponse"/>
+</operation>
+<operation name="cerrarSesion">
+<input wsam:Action="http://ws.monster.edu.ec/WSEurekaBank/cerrarSesionRequest" message="tns:cerrarSesion"/>
+<output wsam:Action="http://ws.monster.edu.ec/WSEurekaBank/cerrarSesionResponse" message="tns:cerrarSesionResponse"/>
+</operation>
+<operation name="registrarDeposito">
+<input wsam:Action="http://ws.monster.edu.ec/WSEurekaBank/registrarDepositoRequest" message="tns:registrarDeposito"/>
+<output wsam:Action="http://ws.monster.edu.ec/WSEurekaBank/registrarDepositoResponse" message="tns:registrarDepositoResponse"/>
+</operation>
+<operation name="registrarRetiro">
+<input wsam:Action="http://ws.monster.edu.ec/WSEurekaBank/registrarRetiroRequest" message="tns:registrarRetiro"/>
+<output wsam:Action="http://ws.monster.edu.ec/WSEurekaBank/registrarRetiroResponse" message="tns:registrarRetiroResponse"/>
+</operation>
+<operation name="cambiarClave">
+<input wsam:Action="http://ws.monster.edu.ec/WSEurekaBank/cambiarClaveRequest" message="tns:cambiarClave"/>
+<output wsam:Action="http://ws.monster.edu.ec/WSEurekaBank/cambiarClaveResponse" message="tns:cambiarClaveResponse"/>
+</operation>
+</portType>
+<binding name="WSEurekaBankPortBinding" type="tns:WSEurekaBank">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<operation name="consultarMovimientos">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="registrarTransferencia">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="iniciarSesion">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="listarCuentas">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="cerrarSesion">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="registrarDeposito">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="registrarRetiro">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="cambiarClave">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+</binding>
+<service name="WSEurekaBank">
+<port name="WSEurekaBankPort" binding="tns:WSEurekaBankPortBinding">
+<soap:address location="http://localhost:8080/WS_EurekaBank_Java_SOAP/WSEurekaBank"/>
+</port>
+</service>
+</definitions>

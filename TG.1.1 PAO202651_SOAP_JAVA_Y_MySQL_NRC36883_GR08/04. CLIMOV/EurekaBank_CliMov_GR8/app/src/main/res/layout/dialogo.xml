@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Diálogo propio de la aplicación (avisos, confirmaciones y "Cambiar servidor") -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/fondo_dialogo">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Ícono dentro de un círculo: el color cambia según el tipo de mensaje -->
+        <TextView
+            android:id="@+id/lblIcono"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/circulo_icono"
+            android:gravity="center"
+            android:importantForAccessibility="no"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lblTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:textColor="@color/texto"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lblMensaje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:lineSpacingExtra="2dp"
+            android:textColor="@color/texto_secundario"
+            android:textSize="15sp" />
+
+        <!-- Solo en "Cambiar servidor" -->
+        <EditText
+            android:id="@+id/txtCampo"
+            style="@style/CampoTexto"
+            android:layout_marginTop="16dp"
+            android:imeOptions="actionDone"
+            android:inputType="textUri"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/lblEstado"
+            style="@style/CajaMensaje" />
+
+        <Button
+            android:id="@+id/btnExtra"
+            style="@style/BotonSecundario"
+            android:layout_marginTop="18dp"
+            android:textColor="@color/primario"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnCancelar"
+                style="@style/BotonSecundario"
+                android:layout_width="0dp"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:text="@string/cancelar" />
+
+            <Button
+                android:id="@+id/btnAceptar"
+                style="@style/BotonPrimario"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

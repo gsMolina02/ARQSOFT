@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ec.edu.monster.Vista.OperacionesPagina"
+             Title="Operaciones"
+             BackgroundColor="{StaticResource ColorFondo}"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Encabezado: las opciones de la sesión van en el menú del botón del empleado -->
+        <Grid BackgroundColor="{StaticResource ColorPrimario}" Padding="20,18,16,18" ColumnDefinitions="*,Auto" ColumnSpacing="10">
+            <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                <Label Text="EurekaBank" TextColor="White" FontSize="21" FontAttributes="Bold" />
+                <Label Text="Operaciones · Servicio RESTful .NET" TextColor="#D6E4F0" FontSize="13" />
+            </VerticalStackLayout>
+            <Button x:Name="btnUsuario" Grid.Column="1"
+                    Text="Empleado ▾"
+                    BackgroundColor="#1069AA" TextColor="White"
+                    FontSize="14" CornerRadius="20" HeightRequest="40" Padding="14,0"
+                    MaximumWidthRequest="170" LineBreakMode="TailTruncation"
+                    VerticalOptions="Center"
+                    Clicked="BtnUsuario_Clicked"
+                    SemanticProperties.Description="Opciones de la sesión" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,18,16,28" Spacing="14">
+
+                <!-- Pestañas de operación -->
+                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="8" RowSpacing="8">
+                    <Button x:Name="btnMovimientos" Text="Movimientos" Style="{StaticResource Pestania}" Clicked="BtnOperacion_Clicked" />
+                    <Button x:Name="btnDeposito" Grid.Column="1" Text="Depósito" Style="{StaticResource Pestania}" Clicked="BtnOperacion_Clicked" />
+                    <Button x:Name="btnRetiro" Grid.Row="1" Text="Retiro" Style="{StaticResource Pestania}" Clicked="BtnOperacion_Clicked" />
+                    <Button x:Name="btnTransferencia" Grid.Row="1" Grid.Column="1" Text="Transferencia" Style="{StaticResource Pestania}" Clicked="BtnOperacion_Clicked" />
+                </Grid>
+
+                <!-- Formulario de la operación elegida -->
+                <Border Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout>
+                        <Label x:Name="lblAyuda" Style="{StaticResource TextoTenue}" />
+
+                        <Label x:Name="lblCuenta" Text="Número de cuenta" Style="{StaticResource Etiqueta}" />
+                        <Border x:Name="bordeCuenta" Style="{StaticResource CajaTexto}">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Entry x:Name="txtCuenta"
+                                       Style="{StaticResource CampoTexto}"
+                                       Placeholder="Ejemplo: 00100001"
+                                       Keyboard="Numeric"
+                                       MaxLength="8"
+                                       ReturnType="Next"
+                                       TextChanged="TxtCuenta_TextChanged"
+                                       Completed="TxtCuenta_Completed" />
+                                <Button x:Name="btnListaCuenta" Grid.Column="1"
+                                        Text="▼" Style="{StaticResource BotonLista}"
+                                        Clicked="BtnListaCuenta_Clicked"
+                                        SemanticProperties.Description="Elegir la cuenta de la lista" />
+                            </Grid>
+                        </Border>
+
+                        <VerticalStackLayout x:Name="pnlDestino" IsVisible="False">
+                            <Label Text="Cuenta de destino" Style="{StaticResource Etiqueta}" />
+                            <Border x:Name="bordeDestino" Style="{StaticResource CajaTexto}">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Entry x:Name="txtDestino"
+                                           Style="{StaticResource CampoTexto}"
+                                           Placeholder="Ejemplo: 00200001"
+                                           Keyboard="Numeric"
+                                           MaxLength="8"
+                                           ReturnType="Next"
+                                           TextChanged="TxtCuenta_TextChanged"
+                                           Completed="TxtDestino_Completed" />
+                                    <Button x:Name="btnListaDestino" Grid.Column="1"
+                                            Text="▼" Style="{StaticResource BotonLista}"
+                                            Clicked="BtnListaCuenta_Clicked"
+                                            SemanticProperties.Description="Elegir la cuenta de destino de la lista" />
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout x:Name="pnlImporte" IsVisible="False">
+                            <Label Text="Importe en USD" Style="{StaticResource Etiqueta}" />
+                            <Border x:Name="bordeImporte" Style="{StaticResource CajaTexto}">
+                                <Entry x:Name="txtImporte"
+                                       Style="{StaticResource CampoTexto}"
+                                       Placeholder="Ejemplo: 100 o 25.50"
+                                       Keyboard="Numeric"
+                                       MaxLength="16"
+                                       ReturnType="Done"
+                                       TextChanged="TxtImporte_TextChanged"
+                                       Completed="BtnEjecutar_Clicked" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <Border x:Name="pnlError" Style="{StaticResource CajaError}" IsVisible="False">
+                            <Label x:Name="lblError" TextColor="{StaticResource ColorPeligro}" FontSize="14" />
+                        </Border>
+
+                        <Button x:Name="btnEjecutar"
+                                Text="Consultar"
+                                Style="{StaticResource BotonPrimario}"
+                                Margin="0,18,0,0"
+                                Clicked="BtnEjecutar_Clicked" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Saldo o comprobante de la última operación -->
+                <Border BackgroundColor="{StaticResource ColorSuave}" Stroke="Transparent"
+                        StrokeShape="RoundRectangle 14" Padding="20,16">
+                    <VerticalStackLayout Spacing="4">
+                        <Label x:Name="lblResultadoTitulo" Text="Saldo disponible" TextColor="{StaticResource ColorTextoSecundario}" FontSize="15" />
+                        <Label x:Name="lblResultado" Text="—" TextColor="{StaticResource ColorPrimario}"
+                               FontSize="26" FontAttributes="Bold" LineBreakMode="WordWrap" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Datos y movimientos de la cuenta: los guarda el servidor y los ven todos los clientes -->
+                <Border Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout Spacing="10">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Label x:Name="lblCuentaTitulo" Text="Movimientos de la cuenta" TextColor="{StaticResource ColorTexto}"
+                                   FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />
+                            <Button x:Name="btnActualizar" Grid.Column="1"
+                                    Text="Actualizar" Style="{StaticResource BotonPequenio}"
+                                    BackgroundColor="{StaticResource ColorSuave}"
+                                    TextColor="{StaticResource ColorPrimario}" FontAttributes="Bold"
+                                    IsVisible="False"
+                                    Clicked="BtnActualizar_Clicked"
+                                    SemanticProperties.Description="Ver los movimientos registrados desde los otros clientes" />
+                        </Grid>
+                        <Label x:Name="lblCuentaDatos" Text="Consulte una cuenta para ver su saldo y sus movimientos."
+                               Style="{StaticResource TextoTenue}" />
+
+                        <Border x:Name="pnlSinMovimientos" Stroke="#E9ECEF" StrokeThickness="2"
+                                StrokeDashArray="4,3" StrokeShape="RoundRectangle 12" Padding="16,26" IsVisible="False">
+                            <Label Text="La cuenta no registra movimientos."
+                                   Style="{StaticResource TextoTenue}" HorizontalTextAlignment="Center" />
+                        </Border>
+
+                        <VerticalStackLayout x:Name="listaMovimientos" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Indicador mientras se consulta al servidor -->
+        <ActivityIndicator x:Name="indicadorCarga" Grid.Row="1"
+                           Color="{StaticResource ColorPrimario}"
+                           IsRunning="False" IsVisible="False"
+                           HorizontalOptions="Center" VerticalOptions="Center"
+                           WidthRequest="48" HeightRequest="48" />
+    </Grid>
+</ContentPage>

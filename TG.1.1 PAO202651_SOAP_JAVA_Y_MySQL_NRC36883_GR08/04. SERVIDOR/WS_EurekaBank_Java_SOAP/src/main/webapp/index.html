@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EurekaBank SOAP | GR08</title>
+    <style>
+        :root {
+            --azul: #005493;
+            --azul-claro: #e8f1f8;
+            --texto: #1f2933;
+            --gris: #5f6b76;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f4f7fa;
+            color: var(--texto);
+        }
+
+        header {
+            background: var(--azul);
+            color: #fff;
+            padding: 24px 16px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0 0 4px;
+            font-size: 1.6rem;
+        }
+
+        header p {
+            margin: 0;
+            opacity: 0.85;
+        }
+
+        main {
+            max-width: 860px;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+
+        .tarjeta {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .tarjeta h2 {
+            margin-top: 0;
+            color: var(--azul);
+            font-size: 1.15rem;
+        }
+
+        .boton {
+            display: inline-block;
+            background: var(--azul);
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 22px;
+            border-radius: 22px;
+            font-weight: 600;
+        }
+
+        code {
+            background: var(--azul-claro);
+            padding: 2px 6px;
+            border-radius: 6px;
+            word-break: break-all;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #e3e8ed;
+            vertical-align: top;
+        }
+
+        th {
+            color: var(--gris);
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--gris);
+            font-size: 0.85rem;
+            padding-bottom: 24px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>EurekaBank - Servicio SOAP en Java</h1>
+    <p>Payara Server 7 · MySQL · Grupo 08 · NRC 36883</p>
+</header>
+<main>
+    <section class="tarjeta">
+        <h2>Contrato del servicio (WSDL)</h2>
+        <p>Los clientes de consola, escritorio, web y móvil consumen el servicio <strong>WSEurekaBank</strong>.
+            Desde otra computadora reemplace <code>localhost</code> por la IP de este servidor.</p>
+        <p><a class="boton" href="WSEurekaBank?wsdl">Ver WSDL</a></p>
+    </section>
+    <section class="tarjeta">
+        <h2>Operaciones</h2>
+        <table>
+            <tr><th>Operación</th><th>Parámetros</th><th>CU</th></tr>
+            <tr><td>iniciarSesion</td><td>usuario, clave</td><td>CU-01</td></tr>
+            <tr><td>cambiarClave</td><td>token, claveActual, claveNueva</td><td>CU-02</td></tr>
+            <tr><td>cerrarSesion</td><td>token</td><td>CU-03</td></tr>
+            <tr><td>consultarMovimientos</td><td>token, cuenta</td><td>CU-04</td></tr>
+            <tr><td>registrarDeposito</td><td>token, cuenta, importe</td><td>CU-05</td></tr>
+            <tr><td>registrarRetiro</td><td>token, cuenta, importe</td><td>CU-06</td></tr>
+            <tr><td>registrarTransferencia</td><td>token, cuentaOrigen, cuentaDestino, importe</td><td>CU-07</td></tr>
+        </table>
+        <p>Toda respuesta trae <code>codigo</code> (200, 201, 400, 401, 404, 409 o 500) y <code>mensaje</code>.</p>
+    </section>
+</main>
+<footer>Arquitectura de Software · ESPE · PAO 202651</footer>
+</body>
+</html>

@@ -1,0 +1,46 @@
+# Peticiones de prueba del servicio EurekaBank (Visual Studio: clic en "Send request").
+# 1. Ejecute el login y copie el token de la respuesta en @token.
+@servidor = http://localhost:5000/api
+@token = pegue-aqui-el-token
+
+### CU-01 Autenticarse
+POST {{servidor}}/sesion/login
+Content-Type: application/json
+
+{ "usuario": "Monster", "clave": "Monster9" }
+
+### CU-04 Consultar movimientos
+GET {{servidor}}/cuentas/00100001/movimientos
+Authorization: Bearer {{token}}
+
+### CU-05 Registrar depósito
+POST {{servidor}}/cuentas/00100001/depositos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "importe": 100.00 }
+
+### CU-06 Registrar retiro
+POST {{servidor}}/cuentas/00100001/retiros
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "importe": 50.00 }
+
+### CU-07 Registrar transferencia
+POST {{servidor}}/transferencias
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "cuentaOrigen": "00100001", "cuentaDestino": "00200001", "importe": 25.00 }
+
+### CU-02 Cambiar contraseña
+PUT {{servidor}}/sesion/clave
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "claveActual": "Monster9", "claveNueva": "Monster10" }
+
+### CU-03 Cerrar sesión
+POST {{servidor}}/sesion/logout
+Authorization: Bearer {{token}}

@@ -1,0 +1,7 @@
+<%-- Mensajes que llegan después de una redirección (por ejemplo, "Contraseña actualizada") --%>
+<c:if test="${not empty exito}">
+    <div class="aviso aviso-exito" role="status"><c:out value="${exito}" /></div>
+</c:if>
+<c:if test="${not empty aviso}">
+    <div class="aviso aviso-advertencia" role="alert"><c:out value="${aviso}" /></div>
+</c:if>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EurekaBank SOAP</string>
+
+    <!-- Encabezados -->
+    <string name="titulo_franja">EurekaBank SOAP GR08</string>
+    <string name="subtitulo_franja">Sistema de Cuentas de Ahorro · Movimientos · Depósitos · Retiros · Transferencias</string>
+    <string name="titulo_operaciones">EurekaBank</string>
+    <string name="subtitulo_operaciones">Operaciones · Servicio SOAP Java</string>
+    <string name="descripcion_imagen">Sullivan, mascota del grupo, en el estadio</string>
+
+    <!-- Inicio de sesión -->
+    <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="ingrese_credenciales">Ingrese sus credenciales para continuar</string>
+    <string name="usuario">Usuario</string>
+    <string name="ejemplo_usuario">Ej.: Monster</string>
+    <string name="contrasenia">Contraseña</string>
+    <string name="ejemplo_contrasenia">Escriba su contraseña</string>
+    <string name="ver">Ver</string>
+    <string name="ocultar">Ocultar</string>
+    <string name="descripcion_ver">Mostrar u ocultar la contraseña</string>
+    <string name="descripcion_lista_cuentas">Elegir la cuenta de la lista</string>
+    <string name="conectando">Conectando...</string>
+    <string name="cambiar_servidor">Cambiar servidor</string>
+
+    <!-- Operaciones -->
+    <string name="descripcion_usuario">Opciones de la sesión</string>
+    <string name="movimientos">Movimientos</string>
+    <string name="deposito">Depósito</string>
+    <string name="retiro">Retiro</string>
+    <string name="transferencia">Transferencia</string>
+    <string name="numero_cuenta">Número de cuenta</string>
+    <string name="cuenta_origen">Cuenta de origen</string>
+    <string name="ejemplo_cuenta">Ejemplo: 00100001</string>
+    <string name="cuenta_destino">Cuenta de destino</string>
+    <string name="ejemplo_destino">Ejemplo: 00200001</string>
+    <string name="importe">Importe en USD</string>
+    <string name="ejemplo_importe">Ejemplo: 100 o 25.50</string>
+    <string name="consultar">Consultar</string>
+    <string name="saldo_disponible">Saldo disponible</string>
+    <string name="sin_resultado">—</string>
+    <string name="movimientos_cuenta">Movimientos de la cuenta</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="descripcion_actualizar">Ver los movimientos registrados desde los otros clientes</string>
+    <string name="consulte_cuenta">Consulte una cuenta para ver su saldo y sus movimientos.</string>
+    <string name="sin_movimientos">La cuenta no registra movimientos.</string>
+
+    <!-- Cambiar contraseña -->
+    <string name="cambiar_contrasenia">Cambiar contraseña</string>
+    <string name="regla_contrasenia">Mínimo 6 caracteres y diferente a la contraseña actual</string>
+    <string name="contrasenia_actual">Contraseña actual</string>
+    <string name="ejemplo_actual">Escriba su contraseña actual</string>
+    <string name="contrasenia_nueva">Nueva contraseña</string>
+    <string name="ejemplo_nueva">Escriba la nueva contraseña</string>
+    <string name="confirmar_contrasenia">Confirmar nueva contraseña</string>
+    <string name="ejemplo_confirmacion">Repita la nueva contraseña</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="guardar">Guardar</string>
+    <string name="volver">Volver</string>
+</resources>

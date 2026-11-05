@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Colores de Android (barra de estado y acentos): azul de EurekaBank GR08 -->
+<resources>
+    <color name="colorPrimary">#005493</color>
+    <color name="colorPrimaryDark">#003E6E</color>
+    <color name="colorAccent">#005493</color>
+</resources>

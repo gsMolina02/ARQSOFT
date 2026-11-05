@@ -1,0 +1,14 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<section class="tarjeta tarjeta-centrada">
+    <h1 class="titulo-seccion texto-peligro">Ocurrió un error inesperado</h1>
+    <p>No se pudo completar la solicitud. Intente nuevamente en unos momentos.</p>
+    @if (Model.ShowRequestId)
+    {
+        <p class="texto-tenue">Identificador de la solicitud: <code>@Model.RequestId</code></p>
+    }
+    <a class="boton boton-primario" asp-controller="Operaciones" asp-action="Index">Volver a las operaciones</a>
+</section>

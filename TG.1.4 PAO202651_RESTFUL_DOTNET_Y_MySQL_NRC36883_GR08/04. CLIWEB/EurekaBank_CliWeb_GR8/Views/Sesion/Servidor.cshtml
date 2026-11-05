@@ -1,0 +1,65 @@
+@model ServidorModelo
+@{
+    ViewData["Title"] = "Configurar servidor";
+    Layout = "_LayoutAcceso";
+}
+
+<div class="acceso">
+    <aside class="acceso-lateral">
+        <img class="acceso-imagen" src="~/img/sullivan.jpg" alt="Sullivan, mascota del grupo, en el estadio" />
+        <div class="acceso-marca">
+            <h1>EurekaBank REST GR08</h1>
+            <p>Sistema de Cuentas de Ahorro<br />Movimientos · Depósitos · Retiros · Transferencias</p>
+        </div>
+    </aside>
+
+    <section class="acceso-formulario">
+        <div class="acceso-caja">
+            <h2 class="titulo-acceso">Servidor REST</h2>
+            <p class="texto-tenue">
+                Escriba la IP de la computadora donde corre el servidor REST (ej.: 192.168.1.25)
+                o la dirección completa. Para usar esta computadora escriba localhost.
+            </p>
+
+            @if (Model.UsaVariableEntorno)
+            {
+                <div class="aviso aviso-advertencia" role="alert">
+                    La variable de entorno WS_BASE_URL tiene prioridad sobre la dirección guardada.
+                </div>
+            }
+
+            <form asp-action="GuardarServidor" method="post" class="formulario">
+                <label for="Direccion" class="etiqueta">Dirección del servidor</label>
+                <input type="text" class="campo-texto" id="Direccion" name="Direccion" value="@Model.Direccion"
+                       placeholder="Ej.: 192.168.1.25" maxlength="200" autocomplete="off" autofocus />
+
+                @if (!string.IsNullOrEmpty(Model.Error))
+                {
+                    <div class="mensaje-error" role="alert">@Model.Error</div>
+                }
+                @if (!string.IsNullOrEmpty(Model.Exito))
+                {
+                    <div class="aviso aviso-exito" role="status">@Model.Exito</div>
+                }
+
+                @if (Model.OfrecerGuardarSinConexion)
+                {
+                    <input type="hidden" name="GuardarSinConexion" value="true" />
+                }
+
+                <div class="fila-botones">
+                    <button type="submit" class="boton boton-secundario" formaction="@Url.Action("ProbarServidor")">
+                        Probar conexión
+                    </button>
+                    <button type="submit" class="boton boton-primario">
+                        @(Model.OfrecerGuardarSinConexion ? "Guardar de todas formas" : "Guardar")
+                    </button>
+                </div>
+            </form>
+
+            <a class="boton boton-secundario boton-ancho" asp-action="Login">Volver al inicio de sesión</a>
+
+            <p class="texto-servidor">Servidor REST actual: @Model.UrlActual</p>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,13 @@
+<%-- Fin de las páginas con sesión: pie con el servidor, diálogo de confirmación y scripts --%>
+    </main>
+
+    <footer class="pie">
+        <div class="contenedor-app">Conectado a <c:out value="${urlServidor}" /></div>
+    </footer>
+
+    <%@ include file="dialogoConfirmacion.jspf" %>
+
+    <script src="${raiz}/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="${raiz}/js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ec.edu.monster.Vista.CambiarContraseniaPagina"
+             Title="Cambiar contraseña"
+             BackgroundColor="{StaticResource ColorFondo}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16,20,16,28">
+            <Border Style="{StaticResource Tarjeta}" Padding="20,22">
+                <VerticalStackLayout>
+                    <Label Text="Cambiar contraseña" Style="{StaticResource TituloSeccion}" />
+                    <Label Text="Mínimo 6 caracteres y diferente a la contraseña actual" Style="{StaticResource TextoTenue}" />
+
+                    <Label Text="Contraseña actual" Style="{StaticResource Etiqueta}" Margin="0,18,0,4" />
+                    <Border x:Name="bordeActual" Style="{StaticResource CajaTexto}">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Entry x:Name="txtActual" Style="{StaticResource CampoTexto}"
+                                   Placeholder="Escriba su contraseña actual" IsPassword="True" MaxLength="50"
+                                   ReturnType="Next" Completed="TxtActual_Completed" />
+                            <Button x:Name="btnVerActual" Grid.Column="1" Text="Ver" Style="{StaticResource BotonOjo}"
+                                    Clicked="BtnVer_Clicked" />
+                        </Grid>
+                    </Border>
+
+                    <Label Text="Nueva contraseña" Style="{StaticResource Etiqueta}" />
+                    <Border x:Name="bordeNueva" Style="{StaticResource CajaTexto}">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Entry x:Name="txtNueva" Style="{StaticResource CampoTexto}"
+                                   Placeholder="Escriba la nueva contraseña" IsPassword="True" MaxLength="50"
+                                   ReturnType="Next" Completed="TxtNueva_Completed" />
+                            <Button x:Name="btnVerNueva" Grid.Column="1" Text="Ver" Style="{StaticResource BotonOjo}"
+                                    Clicked="BtnVer_Clicked" />
+                        </Grid>
+                    </Border>
+
+                    <Label Text="Confirmar nueva contraseña" Style="{StaticResource Etiqueta}" />
+                    <Border x:Name="bordeConfirmacion" Style="{StaticResource CajaTexto}">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Entry x:Name="txtConfirmacion" Style="{StaticResource CampoTexto}"
+                                   Placeholder="Repita la nueva contraseña" IsPassword="True" MaxLength="50"
+                                   ReturnType="Done" Completed="BtnGuardar_Clicked" />
+                            <Button x:Name="btnVerConfirmacion" Grid.Column="1" Text="Ver" Style="{StaticResource BotonOjo}"
+                                    Clicked="BtnVer_Clicked" />
+                        </Grid>
+                    </Border>
+
+                    <Border x:Name="pnlError" Style="{StaticResource CajaError}" IsVisible="False">
+                        <Label x:Name="lblError" TextColor="{StaticResource ColorPeligro}" FontSize="14" />
+                    </Border>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,22,0,0">
+                        <Button x:Name="btnCancelar" Text="Cancelar" Style="{StaticResource BotonSecundario}"
+                                Clicked="BtnCancelar_Clicked" />
+                        <Button x:Name="btnGuardar" Grid.Column="1" Text="Guardar" Style="{StaticResource BotonPrimario}"
+                                HeightRequest="52" Clicked="BtnGuardar_Clicked" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,15 @@
+<Project>
+  <!--
+    La herramienta de recursos de Android (aapt2) no admite rutas de más de 260 caracteres,
+    y la carpeta del repositorio ya es muy larga. Por eso los archivos de compilación (obj y bin)
+    se generan en una ruta corta del usuario: %LOCALAPPDATA%\EurekaBankGR8_REST\<proyecto>\.
+    Se usa EurekaBankGR8_REST para no mezclarlos con otras apps MAUI de los talleres.
+    El código fuente no se mueve. Está en la carpeta 04. CLIMOV para aplicarse desde la primera
+    compilación de la app y de sus Pruebas.
+  -->
+  <PropertyGroup>
+    <CarpetaCompilacion>$(LOCALAPPDATA)\EurekaBankGR8_REST\$(MSBuildProjectName)\</CarpetaCompilacion>
+    <BaseIntermediateOutputPath>$(CarpetaCompilacion)obj\</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(CarpetaCompilacion)bin\</BaseOutputPath>
+  </PropertyGroup>
+</Project>

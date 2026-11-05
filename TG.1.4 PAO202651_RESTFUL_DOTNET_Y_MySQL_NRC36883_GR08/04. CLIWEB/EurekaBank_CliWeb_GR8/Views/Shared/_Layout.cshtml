@@ -1,0 +1,63 @@
+@using ec.edu.monster.Sesion
+@inject AlmacenSesion Sesion
+@inject ec.edu.monster.Util.ConfiguracionServidor ConfiguracionServidor
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EurekaBank GR08</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="cuerpo-app">
+    <header class="encabezado">
+        <div class="contenedor-app encabezado-contenido">
+            <a class="marca" asp-controller="Operaciones" asp-action="Index">
+                <span class="marca-titulo">EurekaBank · Operaciones</span>
+                <span class="marca-subtitulo">Sistema de Cuentas de Ahorro · Servicio RESTful .NET</span>
+            </a>
+
+            @if (Sesion.HaySesionActiva)
+            {
+                <!-- Las opciones de la cuenta se agrupan en un menú para no ocupar espacio en la página -->
+                <div class="dropdown">
+                    <button class="boton-usuario dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="avatar">@(Sesion.Empleado?.FirstOrDefault().ToString().ToUpperInvariant())</span>
+                        @Sesion.Empleado
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end menu-usuario">
+                        <li>
+                            <a class="dropdown-item" asp-controller="Sesion" asp-action="CambiarContrasenia">Cambiar contraseña</a>
+                        </li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li>
+                            <form asp-controller="Sesion" asp-action="CerrarSesion" method="post"
+                                  data-confirmar="Tendrá que volver a ingresar su usuario y contraseña para seguir operando."
+                                  data-confirmar-titulo="¿Cerrar sesión?"
+                                  data-confirmar-boton="Sí, cerrar sesión">
+                                <button type="submit" class="dropdown-item item-peligro">Cerrar sesión</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            }
+        </div>
+    </header>
+
+    <main class="contenedor-app contenido">
+        <partial name="_Avisos" />
+        @RenderBody()
+    </main>
+
+    <footer class="pie">
+        <div class="contenedor-app">Conectado a @ConfiguracionServidor.UrlActual</div>
+    </footer>
+
+    <partial name="_DialogoConfirmacion" />
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,49 @@
+<%-- Inicio de las páginas con sesión: encabezado azul con la marca y el menú del empleado.
+     Antes de incluirlo, la página define la variable "titulo". --%>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><c:out value="${titulo}" /> - EurekaBank GR08</title>
+    <link rel="icon" href="${raiz}/favicon.ico" />
+    <link rel="stylesheet" href="${raiz}/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="${raiz}/css/site.css" />
+</head>
+<body class="cuerpo-app">
+    <header class="encabezado">
+        <div class="contenedor-app encabezado-contenido">
+            <a class="marca" href="${raiz}/operaciones">
+                <span class="marca-titulo">EurekaBank · Operaciones</span>
+                <span class="marca-subtitulo">Sistema de Cuentas de Ahorro · Servicio SOAP Java</span>
+            </a>
+
+            <c:if test="${not empty empleado}">
+                <!-- Las opciones de la cuenta se agrupan en un menú para no ocupar espacio en la página -->
+                <div class="dropdown">
+                    <button class="boton-usuario dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="avatar"><c:out value="${fn:toUpperCase(fn:substring(empleado, 0, 1))}" /></span>
+                        <c:out value="${empleado}" />
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end menu-usuario">
+                        <li>
+                            <a class="dropdown-item" href="${raiz}/sesion/cambiar-contrasenia">Cambiar contraseña</a>
+                        </li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li>
+                            <form action="${raiz}/sesion/cerrar-sesion" method="post"
+                                  data-confirmar="Tendrá que volver a ingresar su usuario y contraseña para seguir operando."
+                                  data-confirmar-titulo="¿Cerrar sesión?"
+                                  data-confirmar-boton="Sí, cerrar sesión">
+                                <input type="hidden" name="_token" value="${tokenFormulario}" />
+                                <button type="submit" class="dropdown-item item-peligro">Cerrar sesión</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </c:if>
+        </div>
+    </header>
+
+    <main class="contenedor-app contenido">
+        <%@ include file="avisos.jspf" %>
