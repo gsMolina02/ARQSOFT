@@ -22,14 +22,14 @@ echo   [9] Salir
 echo.
 set /p op="Seleccione una opcion (0-9): "
 
-if "%op%"=="0" ( start "EurekaBank REST - Servidor Payara" cmd /c ""%ROOT%04. SERVIDOR\INICIAR_SERVIDOR_REST.bat"" & goto menu )
-if "%op%"=="1" ( start "EurekaBank REST - Escritorio Swing" cmd /c ""%ROOT%04. CLIESC\INICIAR_ESCRITORIO.bat"" & goto menu )
-if "%op%"=="2" ( start "EurekaBank REST - Consola" cmd /c ""%ROOT%04. CLICON\INICIAR_CONSOLA.bat"" & goto menu )
-if "%op%"=="3" ( start "EurekaBank REST - Web JSP" cmd /c ""%ROOT%04. CLIWEB\INICIAR_WEB.bat"" & goto menu )
-if "%op%"=="4" ( start "EurekaBank REST - Movil" cmd /c ""%ROOT%04. CLIMOV\INICIAR_MOVIL.bat"" & goto menu )
+if "%op%"=="0" ( start "EurekaBank REST - Servidor Payara" "%ROOT%04. SERVIDOR\INICIAR_SERVIDOR_REST.bat" & goto menu )
+if "%op%"=="1" ( start "EurekaBank REST - Escritorio Swing" "%ROOT%04. CLIESC\INICIAR_ESCRITORIO.bat" & goto menu )
+if "%op%"=="2" ( start "EurekaBank REST - Consola" "%ROOT%04. CLICON\INICIAR_CONSOLA.bat" & goto menu )
+if "%op%"=="3" ( start "EurekaBank REST - Web JSP" "%ROOT%04. CLIWEB\INICIAR_WEB.bat" & goto menu )
+if "%op%"=="4" ( start "EurekaBank REST - Movil" "%ROOT%04. CLIMOV\INICIAR_MOVIL.bat" & goto menu )
 if "%op%"=="5" ( call "%ROOT%04. SERVIDOR\DESBLOQUEAR_FIREWALL.bat" & goto menu )
 if "%op%"=="6" ( call "%ROOT%04. CLIMOV\CONECTAR_CELULAR_WIFI.bat" & goto menu )
-if "%op%"=="7" ( start "EurekaBank REST - Tunel Cloudflare" cmd /c ""%ROOT%04. SERVIDOR\INICIAR_TUNEL_CLOUD.bat"" & goto menu )
+if "%op%"=="7" ( start "EurekaBank REST - Tunel Cloudflare" "%ROOT%04. SERVIDOR\INICIAR_TUNEL_CLOUD.bat" & goto menu )
 if "%op%"=="8" ( call "%ROOT%CAMBIAR_IP_SERVIDOR.bat" & goto menu )
 if "%op%"=="9" ( exit /b )
 goto menu

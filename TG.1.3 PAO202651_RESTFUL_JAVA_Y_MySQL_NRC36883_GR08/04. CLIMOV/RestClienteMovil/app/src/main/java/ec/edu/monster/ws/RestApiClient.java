@@ -27,7 +27,7 @@ public class RestApiClient {
     private static final String KEY_SERVER = "server_host";
 
     // Host activo actual
-    private static volatile String activeHost = "https://pda-today-purchase-communist.trycloudflare.com";
+    private static volatile String activeHost = "10.40.60.90:8080";
 
     // Candidatos para auto-conexiÃ³n y failover
     private static final String[] CANDIDATES = {

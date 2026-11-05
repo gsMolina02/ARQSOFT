@@ -1,1 +1,1 @@
-https://pda-today-purchase-communist.trycloudflare.com
+10.40.60.90:8080
