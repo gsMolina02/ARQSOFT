@@ -1,0 +1,157 @@
+@using ec.edu.monster.Cliente.Dto
+@model OperacionesModelo
+@{
+    ViewData["Title"] = Model.Operacion.NombreVisible();
+    string ClaseError(string campo) => Model.CampoConError == campo ? " campo-invalido" : string.Empty;
+    bool esTransferencia = Model.Operacion == TipoOperacion.Transferencia;
+    bool llevaImporte = Model.Operacion != TipoOperacion.Movimientos;
+    (string boton, string ayuda, string? confirmar, string? tituloConfirmar) = Model.Operacion switch
+    {
+        TipoOperacion.Deposito => ("Depositar", "Registre un depósito en una cuenta activa.",
+                "Se va a depositar ${Importe} en la cuenta {Cuenta}.", "¿Registrar el depósito?"),
+        TipoOperacion.Retiro => ("Retirar", "Registre un retiro; la cuenta debe tener saldo suficiente.",
+                "Se va a retirar ${Importe} de la cuenta {Cuenta}.", "¿Registrar el retiro?"),
+        TipoOperacion.Transferencia => ("Transferir", "Transfiera entre dos cuentas activas distintas.",
+                "Se van a transferir ${Importe} de la cuenta {Cuenta} a la cuenta {CuentaDestino}. Ambas cuentas se actualizan en una sola operación.",
+                "¿Registrar la transferencia?"),
+        _ => ("Consultar", "Consulte los datos, el saldo y los movimientos de una cuenta.", null, null)
+    };
+    CuentaDto? cuenta = Model.Consulta?.Cuenta;
+}
+
+<div class="rejilla-conversor">
+    <div class="columna-principal">
+        <nav class="pestanias" aria-label="Operación">
+            @foreach (TipoOperacion operacion in Enum.GetValues<TipoOperacion>())
+            {
+                <a class="pestania@(operacion == Model.Operacion ? " pestania-activa" : string.Empty)"
+                   asp-action="Index" asp-route-operacion="@operacion" asp-route-cuenta="@cuenta?.Numero"
+                   aria-current="@(operacion == Model.Operacion ? "page" : null)">@operacion.NombreVisible()</a>
+            }
+        </nav>
+
+        <form asp-action="Ejecutar" method="post" class="tarjeta formulario" data-bloquear-envio="Procesando..."
+              data-confirmar-plantilla="@confirmar" data-confirmar-titulo="@tituloConfirmar"
+              data-confirmar-boton="@($"Sí, {boton.ToLowerInvariant()}")">
+            <input type="hidden" name="Operacion" value="@Model.Operacion" />
+            <p class="texto-tenue">@ayuda</p>
+
+            @if (esTransferencia)
+            {
+                <div class="fila-cuentas">
+                    <div>
+                        <label for="Cuenta" class="etiqueta">Cuenta de origen</label>
+                        <partial name="_CampoCuenta" model='("Cuenta", Model.Cuenta, "Ej.: 00100001", ClaseError("cuenta"), true, Model.Cuentas)' />
+                    </div>
+                    <div>
+                        <label for="CuentaDestino" class="etiqueta">Cuenta de destino</label>
+                        <partial name="_CampoCuenta" model='("CuentaDestino", Model.CuentaDestino, "Ej.: 00200001", ClaseError("destino"), false, Model.Cuentas)' />
+                    </div>
+                </div>
+            }
+            else
+            {
+                <label for="Cuenta" class="etiqueta">Número de cuenta</label>
+                <partial name="_CampoCuenta" model='("Cuenta", Model.Cuenta, "Ejemplo: 00100001", ClaseError("cuenta"), true, Model.Cuentas)' />
+            }
+
+            @if (llevaImporte)
+            {
+                <label for="Importe" class="etiqueta">Importe en USD</label>
+                <input type="text" class="campo-texto campo-grande@(ClaseError("importe"))" id="Importe" name="Importe"
+                       value="@Model.Importe" placeholder="Ejemplo: 100 o 25.50" maxlength="16" inputmode="decimal"
+                       autocomplete="off" data-patron="^\d{0,13}([.,]\d{0,2})?$" />
+            }
+
+            @if (!string.IsNullOrEmpty(Model.Error))
+            {
+                <div class="mensaje-error" role="alert">@Model.Error</div>
+            }
+
+            <button type="submit" class="boton boton-primario boton-ancho boton-grande">@boton</button>
+        </form>
+
+        @if (Model.SinConexion)
+        {
+            @* La dirección del servidor solo se cambia sin sesión: el token vale únicamente en el servidor que lo emitió *@
+            <form asp-controller="Sesion" asp-action="CerrarSesion" method="post" class="fila-sin-conexion">
+                <input type="hidden" name="configurar" value="true" />
+                <button type="submit" class="boton boton-secundario">Cerrar sesión y configurar el servidor</button>
+            </form>
+        }
+
+        <section class="tarjeta-resultado" aria-live="polite">
+            <p class="resultado-titulo">@(Model.ResultadoTitulo ?? (llevaImporte ? "Comprobante" : "Saldo disponible"))</p>
+            <p class="resultado-valor" title="@Model.ResultadoValor">@(Model.ResultadoValor ?? "—")</p>
+        </section>
+    </div>
+
+    <aside class="tarjeta columna-historial">
+        <div class="historial-encabezado">
+            <div>
+                <h2 class="titulo-historial">@(cuenta is null ? "Movimientos de la cuenta" : $"Cuenta {cuenta.Numero}")</h2>
+                @if (cuenta is null)
+                {
+                    <p class="texto-tenue texto-pequenio">Consulte una cuenta para ver su saldo y sus movimientos.</p>
+                }
+            </div>
+            @if (cuenta is not null)
+            {
+                @* Los movimientos los guarda el servidor: "Actualizar" muestra lo registrado desde los otros clientes *@
+                <div class="historial-acciones">
+                    <a class="boton boton-suave boton-pequenio" asp-action="Index" asp-route-operacion="@Model.Operacion"
+                       asp-route-cuenta="@cuenta.Numero" title="Ver los movimientos registrados desde los otros clientes">Actualizar</a>
+                </div>
+            }
+        </div>
+
+        @if (cuenta is not null)
+        {
+            <p class="datos-cuenta">
+                <strong>@cuenta.Cliente</strong> · cédula @cuenta.Cedula<br />
+                @cuenta.Sucursal · @cuenta.Moneda ·
+                <span class="@(cuenta.Estado == "ACTIVO" ? string.Empty : "estado-no-activo")">estado @cuenta.Estado</span><br />
+                Saldo <strong>@FormatoUtil.FormatearMonto(cuenta.Saldo, cuenta.SimboloMoneda)</strong> · @Model.Consulta!.Mensaje
+            </p>
+
+            @if (Model.Consulta.Movimientos.Count == 0)
+            {
+                <p class="historial-vacio">La cuenta no registra movimientos.</p>
+            }
+            else
+            {
+                <div class="historial-tabla-contenedor">
+                    <table class="historial-tabla">
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Fecha</th>
+                                <th>Tipo</th>
+                                <th class="importe">Importe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (MovimientoDto movimiento in Model.Consulta.Movimientos.OrderByDescending(m => m.Numero))
+                            {
+                                <tr title="@movimiento.Accion · registrado por el empleado @movimiento.Empleado">
+                                    <td>@movimiento.Numero</td>
+                                    <td>@movimiento.FechaHora.ToString("dd/MM/yyyy")<br /><span class="texto-referencia">@movimiento.FechaHora.ToString("HH:mm:ss")</span></td>
+                                    <td>
+                                        @movimiento.Tipo
+                                        @if (movimiento.CuentaReferencia is not null)
+                                        {
+                                            <br /><span class="texto-referencia">@(movimiento.EsIngreso ? "desde" : "hacia") @movimiento.CuentaReferencia</span>
+                                        }
+                                    </td>
+                                    <td class="importe @(movimiento.EsIngreso ? "importe-ingreso" : "importe-salida")">
+                                        @FormatoUtil.FormatearMovimiento(movimiento.Importe, movimiento.EsIngreso, cuenta.SimboloMoneda)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        }
+    </aside>
+</div>

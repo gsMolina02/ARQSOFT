@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Estilos de EurekaBank GR08: mismos colores y formas que los clientes de escritorio y web -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Color x:Key="ColorPrimario">#005493</Color>
+    <Color x:Key="ColorPrimarioHover">#0063B1</Color>
+    <Color x:Key="ColorSuave">#E1EAF4</Color>
+    <Color x:Key="ColorFondo">#F4F6F9</Color>
+    <Color x:Key="ColorTexto">#212529</Color>
+    <Color x:Key="ColorTextoSecundario">#495057</Color>
+    <Color x:Key="ColorTextoTenue">#6C757D</Color>
+    <Color x:Key="ColorBorde">#CED4DA</Color>
+    <Color x:Key="ColorPeligro">#C00000</Color>
+    <Color x:Key="ColorFondoError">#FDECEA</Color>
+    <Color x:Key="ColorFondoAviso">#FFF4E5</Color>
+
+    <!-- Etiquetas -->
+    <Style x:Key="Etiqueta" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource ColorTextoSecundario}" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Margin" Value="0,10,0,4" />
+    </Style>
+
+    <Style x:Key="TextoTenue" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource ColorTextoTenue}" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style x:Key="TituloSeccion" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource ColorTexto}" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <!-- Cuadro de texto: borde redondeado que se pinta de azul al escribir (ver ResaltadoCampo) -->
+    <Style x:Key="CajaTexto" TargetType="Border">
+        <Setter Property="Stroke" Value="{StaticResource ColorBorde}" />
+        <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="Padding" Value="12,0,6,0" />
+        <Setter Property="HeightRequest" Value="52" />
+    </Style>
+
+    <Style x:Key="CampoTexto" TargetType="Entry">
+        <Setter Property="TextColor" Value="{StaticResource ColorTexto}" />
+        <Setter Property="PlaceholderColor" Value="#ADB5BD" />
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="CampoLista" TargetType="Picker">
+        <Setter Property="TextColor" Value="{StaticResource ColorTexto}" />
+        <Setter Property="TitleColor" Value="{StaticResource ColorTextoTenue}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Botones -->
+    <Style x:Key="BotonPrimario" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource ColorPrimario}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="HeightRequest" Value="54" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="#003E6E" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="#7FA8C9" />
+                            <Setter Property="TextColor" Value="White" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BotonSecundario" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#E9ECEF" />
+        <Setter Property="TextColor" Value="{StaticResource ColorTextoSecundario}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="HeightRequest" Value="52" />
+    </Style>
+
+    <Style x:Key="BotonPequenio" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#E9ECEF" />
+        <Setter Property="TextColor" Value="{StaticResource ColorTextoSecundario}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="CornerRadius" Value="18" />
+        <Setter Property="HeightRequest" Value="36" />
+        <Setter Property="Padding" Value="16,0" />
+    </Style>
+
+    <Style x:Key="BotonEnlace" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource ColorPrimario}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="Padding" Value="8,0" />
+        <Setter Property="HeightRequest" Value="40" />
+    </Style>
+
+    <!-- Botón "Ver/Ocultar" dentro de los campos de contraseña -->
+    <Style x:Key="BotonOjo" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource ColorPrimario}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="Padding" Value="8,0" />
+        <Setter Property="MinimumWidthRequest" Value="72" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Flecha dentro del campo de cuenta: despliega las cuentas del servidor -->
+    <Style x:Key="BotonLista" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource ColorPrimario}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Padding" Value="8,0" />
+        <Setter Property="MinimumWidthRequest" Value="48" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Pestañas de operación (la activa se pinta en azul desde el código) -->
+    <Style x:Key="Pestania" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource ColorSuave}" />
+        <Setter Property="TextColor" Value="{StaticResource ColorPrimario}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="Padding" Value="4,0" />
+    </Style>
+
+    <!-- Tarjetas y mensajes -->
+    <Style x:Key="Tarjeta" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 14" />
+        <Setter Property="Padding" Value="18" />
+        <Setter Property="Shadow">
+            <Shadow Brush="#101828" Opacity="0.08" Radius="6" Offset="0,2" />
+        </Setter>
+    </Style>
+
+    <Style x:Key="CajaError" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource ColorFondoError}" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+        <Setter Property="Padding" Value="14,10" />
+        <Setter Property="Margin" Value="0,12,0,0" />
+    </Style>
+
+    <Style x:Key="CajaAviso" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource ColorFondoAviso}" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+        <Setter Property="Padding" Value="14,10" />
+        <Setter Property="Margin" Value="0,12,0,0" />
+    </Style>
+</ResourceDictionary>

@@ -1,0 +1,43 @@
+@model LoginModelo
+@{
+    ViewData["Title"] = "Iniciar sesión";
+    Layout = "_LayoutAcceso";
+}
+
+<div class="acceso">
+    <aside class="acceso-lateral">
+        <img class="acceso-imagen" src="~/img/sullivan.jpg" alt="Sullivan, mascota del grupo, en el estadio" />
+        <div class="acceso-marca">
+            <h1>EurekaBank REST GR08</h1>
+            <p>Sistema de Cuentas de Ahorro<br />Movimientos · Depósitos · Retiros · Transferencias</p>
+        </div>
+    </aside>
+
+    <section class="acceso-formulario">
+        <div class="acceso-caja">
+            <h2 class="titulo-acceso">Iniciar sesión</h2>
+            <p class="texto-tenue">Ingrese sus credenciales para continuar</p>
+
+            <partial name="_Avisos" />
+
+            <form asp-action="Login" method="post" class="formulario" data-bloquear-envio="Conectando...">
+                <label for="Usuario" class="etiqueta">Usuario</label>
+                <input type="text" class="campo-texto" id="Usuario" name="Usuario" value="@Model.Usuario"
+                       placeholder="Ej.: Monster" maxlength="50" autocomplete="username" autofocus />
+
+                <label for="Contrasenia" class="etiqueta">Contraseña</label>
+                <partial name="_CampoContrasenia" model='("Contrasenia", "Contrasenia", "Escriba su contraseña")' />
+
+                @if (!string.IsNullOrEmpty(Model.Error))
+                {
+                    <div class="mensaje-error" role="alert">@Model.Error</div>
+                }
+
+                <button type="submit" class="boton boton-primario boton-ancho">Iniciar sesión</button>
+            </form>
+
+            <p class="texto-servidor">Servidor REST: @Model.UrlServidor</p>
+            <a class="enlace-servidor" asp-action="Servidor">Configurar servidor</a>
+        </div>
+    </section>
+</div>

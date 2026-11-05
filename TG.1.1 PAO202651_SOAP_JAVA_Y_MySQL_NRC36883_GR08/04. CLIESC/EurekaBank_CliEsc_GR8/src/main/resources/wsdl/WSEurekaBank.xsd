@@ -1,0 +1,233 @@
+<?xml version='1.0' encoding='UTF-8'?><xs:schema xmlns:tns="http://ws.monster.edu.ec/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws.monster.edu.ec/">
+
+<xs:element name="cambiarClave" type="tns:cambiarClave"/>
+
+<xs:element name="cambiarClaveResponse" type="tns:cambiarClaveResponse"/>
+
+<xs:element name="cerrarSesion" type="tns:cerrarSesion"/>
+
+<xs:element name="cerrarSesionResponse" type="tns:cerrarSesionResponse"/>
+
+<xs:element name="consultarMovimientos" type="tns:consultarMovimientos"/>
+
+<xs:element name="consultarMovimientosResponse" type="tns:consultarMovimientosResponse"/>
+
+<xs:element name="iniciarSesion" type="tns:iniciarSesion"/>
+
+<xs:element name="iniciarSesionResponse" type="tns:iniciarSesionResponse"/>
+
+<xs:element name="listarCuentas" type="tns:listarCuentas"/>
+
+<xs:element name="listarCuentasResponse" type="tns:listarCuentasResponse"/>
+
+<xs:element name="registrarDeposito" type="tns:registrarDeposito"/>
+
+<xs:element name="registrarDepositoResponse" type="tns:registrarDepositoResponse"/>
+
+<xs:element name="registrarRetiro" type="tns:registrarRetiro"/>
+
+<xs:element name="registrarRetiroResponse" type="tns:registrarRetiroResponse"/>
+
+<xs:element name="registrarTransferencia" type="tns:registrarTransferencia"/>
+
+<xs:element name="registrarTransferenciaResponse" type="tns:registrarTransferenciaResponse"/>
+
+<xs:complexType name="registrarDeposito">
+<xs:sequence>
+<xs:element name="token" type="xs:string" minOccurs="0"/>
+<xs:element name="cuenta" type="xs:string" minOccurs="0"/>
+<xs:element name="importe" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="registrarDepositoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:respuestaTransaccion" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="respuestaTransaccion">
+<xs:complexContent>
+<xs:extension base="tns:respuesta">
+<xs:sequence>
+<xs:element name="saldo" type="xs:decimal" minOccurs="0"/>
+<xs:element name="numeroMovimiento" type="xs:int"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="respuesta">
+<xs:sequence>
+<xs:element name="codigo" type="xs:int"/>
+<xs:element name="mensaje" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="iniciarSesion">
+<xs:sequence>
+<xs:element name="usuario" type="xs:string" minOccurs="0"/>
+<xs:element name="clave" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="iniciarSesionResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:respuestaSesion" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="respuestaSesion">
+<xs:complexContent>
+<xs:extension base="tns:respuesta">
+<xs:sequence>
+<xs:element name="token" type="xs:string" minOccurs="0"/>
+<xs:element name="usuario" type="xs:string" minOccurs="0"/>
+<xs:element name="empleado" type="xs:string" minOccurs="0"/>
+<xs:element name="minutosVigencia" type="xs:int"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="listarCuentas">
+<xs:sequence>
+<xs:element name="token" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listarCuentasResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:respuestaCuentas" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="respuestaCuentas">
+<xs:complexContent>
+<xs:extension base="tns:respuesta">
+<xs:sequence>
+<xs:element name="cuentas" minOccurs="0">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="cuenta" type="tns:cuenta" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="cuenta">
+<xs:sequence>
+<xs:element name="numero" type="xs:string" minOccurs="0"/>
+<xs:element name="cliente" type="xs:string" minOccurs="0"/>
+<xs:element name="cedula" type="xs:string" minOccurs="0"/>
+<xs:element name="moneda" type="xs:string" minOccurs="0"/>
+<xs:element name="simboloMoneda" type="xs:string" minOccurs="0"/>
+<xs:element name="sucursal" type="xs:string" minOccurs="0"/>
+<xs:element name="estado" type="xs:string" minOccurs="0"/>
+<xs:element name="saldo" type="xs:decimal" minOccurs="0"/>
+<xs:element name="fechaApertura" type="xs:string" minOccurs="0"/>
+<xs:element name="contadorMovimientos" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="consultarMovimientos">
+<xs:sequence>
+<xs:element name="token" type="xs:string" minOccurs="0"/>
+<xs:element name="cuenta" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="consultarMovimientosResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:respuestaMovimientos" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="respuestaMovimientos">
+<xs:complexContent>
+<xs:extension base="tns:respuesta">
+<xs:sequence>
+<xs:element name="cuenta" type="tns:cuenta" minOccurs="0"/>
+<xs:element name="movimientos" minOccurs="0">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="movimiento" type="tns:movimiento" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="movimiento">
+<xs:sequence>
+<xs:element name="numero" type="xs:int"/>
+<xs:element name="fechaHora" type="xs:string" minOccurs="0"/>
+<xs:element name="codigoTipo" type="xs:string" minOccurs="0"/>
+<xs:element name="tipo" type="xs:string" minOccurs="0"/>
+<xs:element name="accion" type="xs:string" minOccurs="0"/>
+<xs:element name="importe" type="xs:decimal" minOccurs="0"/>
+<xs:element name="cuentaReferencia" type="xs:string" minOccurs="0"/>
+<xs:element name="empleado" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cerrarSesion">
+<xs:sequence>
+<xs:element name="token" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cerrarSesionResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:respuesta" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="registrarRetiro">
+<xs:sequence>
+<xs:element name="token" type="xs:string" minOccurs="0"/>
+<xs:element name="cuenta" type="xs:string" minOccurs="0"/>
+<xs:element name="importe" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="registrarRetiroResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:respuestaTransaccion" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="registrarTransferencia">
+<xs:sequence>
+<xs:element name="token" type="xs:string" minOccurs="0"/>
+<xs:element name="cuentaOrigen" type="xs:string" minOccurs="0"/>
+<xs:element name="cuentaDestino" type="xs:string" minOccurs="0"/>
+<xs:element name="importe" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="registrarTransferenciaResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:respuestaTransaccion" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cambiarClave">
+<xs:sequence>
+<xs:element name="token" type="xs:string" minOccurs="0"/>
+<xs:element name="claveActual" type="xs:string" minOccurs="0"/>
+<xs:element name="claveNueva" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cambiarClaveResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:respuesta" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

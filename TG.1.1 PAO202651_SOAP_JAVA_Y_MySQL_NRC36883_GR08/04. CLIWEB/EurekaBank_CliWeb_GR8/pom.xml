@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>ec.edu.monster</groupId>
+    <artifactId>EurekaBank_CliWeb_GR8</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>EurekaBank_CliWeb_GR8</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>21</maven.compiler.release>
+        <jakartaee>11.0.0</jakartaee>
+        <jaxws.version>4.0.3</jaxws.version>
+        <junit.jupiter.version>5.10.2</junit.jupiter.version>
+    </properties>
+
+    <dependencies>
+        <!-- Servlets, JSP y JSTL: los provee Payara -->
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>${jakartaee}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Stubs SOAP: Payara 7 trae Metro (Jakarta XML Web Services), no se empaqueta en el WAR -->
+        <dependency>
+            <groupId>jakarta.xml.ws</groupId>
+            <artifactId>jakarta.xml.ws-api</artifactId>
+            <version>4.0.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Solo para las pruebas, que se ejecutan fuera de Payara -->
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-rt</artifactId>
+            <version>${jaxws.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Guarda la dirección del servidor en %APPDATA%\EurekaBank_GR8\servidor_soap.json -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <!-- compile (no test): las pruebas viven en Source Packages, paquete ec.edu.monster.pruebas -->
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!--
+              El repositorio esta dentro de OneDrive, que marca las carpetas como solo lectura: Maven borra
+              los archivos de target pero no esas carpetas. clean borra todo lo que puede y no detiene
+              la compilacion ("Limpiar y compilar" de NetBeans).
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <failOnError>false</failOnError>
+                </configuration>
+            </plugin>
+            <!--
+              Stubs del servicio SOAP WSEurekaBank (paquete ec.edu.monster.cliente.ws). Se generan desde la copia
+              del contrato en src/main/resources/wsdl, así el proyecto compila sin que Payara esté encendido;
+              la dirección real del servidor se fija al conectarse (Configurar servidor).
+            -->
+            <plugin>
+                <groupId>com.sun.xml.ws</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+                <version>${jaxws.version}</version>
+                <executions>
+                    <execution>
+                        <id>wsimport-WSEurekaBank</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlDirectory>${project.basedir}/src/main/resources/wsdl</wsdlDirectory>
+                            <wsdlFiles>
+                                <wsdlFile>WSEurekaBank.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <wsdlLocation>/wsdl/WSEurekaBank.wsdl</wsdlLocation>
+                            <packageName>ec.edu.monster.cliente.ws</packageName>
+                            <encoding>UTF-8</encoding>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.12.1</version>
+                <configuration>
+                    <release>${maven.compiler.release}</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <!-- Las pruebas y JUnit no se despliegan en Payara -->
+                    <packagingExcludes>
+                        WEB-INF/classes/ec/edu/monster/pruebas/**,
+                        WEB-INF/lib/junit-*.jar,
+                        WEB-INF/lib/opentest4j-*.jar,
+                        WEB-INF/lib/apiguardian-api-*.jar
+                    </packagingExcludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <!-- Busca las pruebas en las clases compiladas de Source Packages -->
+                    <testClassesDirectory>${project.build.outputDirectory}</testClassesDirectory>
+                    <includes>
+                        <include>ec/edu/monster/pruebas/**/*Test.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

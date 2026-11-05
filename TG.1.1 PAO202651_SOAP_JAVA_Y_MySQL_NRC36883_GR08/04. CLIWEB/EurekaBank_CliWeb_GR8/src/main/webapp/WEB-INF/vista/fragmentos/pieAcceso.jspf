@@ -1,0 +1,9 @@
+<%-- Fin de las páginas sin sesión --%>
+        </div>
+    </section>
+</div>
+
+<script src="${raiz}/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="${raiz}/js/site.js"></script>
+</body>
+</html>

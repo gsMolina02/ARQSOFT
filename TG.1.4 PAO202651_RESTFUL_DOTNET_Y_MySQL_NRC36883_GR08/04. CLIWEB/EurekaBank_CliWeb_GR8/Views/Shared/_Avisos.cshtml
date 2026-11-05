@@ -1,0 +1,9 @@
+@* Mensajes que llegan después de una redirección (por ejemplo, "Contraseña actualizada") *@
+@if (TempData["Exito"] is string exito)
+{
+    <div class="aviso aviso-exito" role="status">@exito</div>
+}
+@if (TempData["Aviso"] is string aviso)
+{
+    <div class="aviso aviso-advertencia" role="alert">@aviso</div>
+}

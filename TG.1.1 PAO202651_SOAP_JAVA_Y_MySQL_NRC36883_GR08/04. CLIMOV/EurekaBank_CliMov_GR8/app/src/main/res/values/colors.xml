@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mismos colores que los clientes de consola, escritorio y web -->
+<resources>
+    <color name="primario">#005493</color>
+    <color name="suave">#E1EAF4</color>
+    <color name="fondo">#F4F6F9</color>
+    <color name="texto">#212529</color>
+    <color name="texto_secundario">#495057</color>
+    <color name="texto_tenue">#6C757D</color>
+    <color name="texto_encabezado">#D6E4F0</color>
+    <color name="peligro">#C00000</color>
+    <color name="exito">#198754</color>
+    <color name="aviso">#8A4B00</color>
+    <color name="ayuda">#ADB5BD</color>
+</resources>

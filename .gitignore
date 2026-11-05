@@ -22,3 +22,6 @@ local.properties
 
 # NetBeans Private
 **/nbproject/private/
+
+# Java / Maven (compilados de NetBeans)
+**/target/

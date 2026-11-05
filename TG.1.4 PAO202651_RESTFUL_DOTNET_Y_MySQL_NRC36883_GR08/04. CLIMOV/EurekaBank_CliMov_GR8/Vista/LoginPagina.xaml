@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ec.edu.monster.Vista.LoginPagina"
+             Title="Iniciar sesión"
+             BackgroundColor="White"
+             NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <VerticalStackLayout>
+
+            <!-- Imagen de Sullivan: cubre todo el ancho y recorta lo que sobra -->
+            <Image Source="sullivan.jpg"
+                   Aspect="AspectFill"
+                   HeightRequest="300"
+                   SemanticProperties.Description="Sullivan, mascota del grupo, en el estadio" />
+
+            <VerticalStackLayout BackgroundColor="{StaticResource ColorPrimario}" Padding="24,16,24,18" Spacing="2">
+                <Label Text="EurekaBank REST GR08" TextColor="White" FontSize="28" FontAttributes="Bold" />
+                <Label Text="Sistema de Cuentas de Ahorro · Movimientos · Depósitos · Retiros · Transferencias"
+                       TextColor="#D6E4F0" FontSize="14" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Padding="24,24,24,28">
+                <Label Text="Iniciar sesión" Style="{StaticResource TituloSeccion}" />
+                <Label Text="Ingrese sus credenciales para continuar" Style="{StaticResource TextoTenue}" />
+
+                <Border x:Name="pnlAviso" Style="{StaticResource CajaAviso}" IsVisible="False">
+                    <Label x:Name="lblAviso" TextColor="#8A4B00" FontSize="14" />
+                </Border>
+
+                <Label Text="Usuario" Style="{StaticResource Etiqueta}" Margin="0,18,0,4" />
+                <Border x:Name="bordeUsuario" Style="{StaticResource CajaTexto}">
+                    <Entry x:Name="txtUsuario"
+                           Style="{StaticResource CampoTexto}"
+                           Placeholder="Ej.: Monster"
+                           MaxLength="50"
+                           IsSpellCheckEnabled="False"
+                           IsTextPredictionEnabled="False"
+                           ReturnType="Next"
+                           Completed="TxtUsuario_Completed" />
+                </Border>
+
+                <Label Text="Contraseña" Style="{StaticResource Etiqueta}" />
+                <Border x:Name="bordeContrasenia" Style="{StaticResource CajaTexto}">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Entry x:Name="txtContrasenia"
+                               Style="{StaticResource CampoTexto}"
+                               Placeholder="Escriba su contraseña"
+                               IsPassword="True"
+                               MaxLength="50"
+                               ReturnType="Done"
+                               Completed="BtnIngresar_Clicked" />
+                        <Button x:Name="btnVerContrasenia" Grid.Column="1"
+                                Text="Ver" Style="{StaticResource BotonOjo}"
+                                Clicked="BtnVerContrasenia_Clicked"
+                                SemanticProperties.Description="Mostrar u ocultar la contraseña" />
+                    </Grid>
+                </Border>
+
+                <Border x:Name="pnlError" Style="{StaticResource CajaError}" IsVisible="False">
+                    <Label x:Name="lblError" TextColor="{StaticResource ColorPeligro}" FontSize="14" />
+                </Border>
+
+                <Button x:Name="btnIngresar"
+                        Text="Iniciar sesión"
+                        Style="{StaticResource BotonPrimario}"
+                        Margin="0,22,0,0"
+                        Clicked="BtnIngresar_Clicked" />
+
+                <ActivityIndicator x:Name="indicadorCarga" Color="{StaticResource ColorPrimario}"
+                                   IsRunning="False" IsVisible="False" Margin="0,14,0,0" />
+
+                <Label x:Name="lblServidor" TextColor="#969CA2" FontSize="12" Margin="0,24,0,0" />
+                <Button Text="Cambiar servidor"
+                        Style="{StaticResource BotonEnlace}"
+                        HorizontalOptions="Start"
+                        Margin="-8,0,0,0"
+                        Clicked="BtnCambiarServidor_Clicked" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

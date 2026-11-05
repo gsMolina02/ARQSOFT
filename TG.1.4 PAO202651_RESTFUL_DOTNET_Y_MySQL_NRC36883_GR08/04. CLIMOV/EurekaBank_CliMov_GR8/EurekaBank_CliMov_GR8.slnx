@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/Pruebas/">
+    <Project Path="Pruebas/EurekaBank_CliMov_GR8.Pruebas.csproj" />
+  </Folder>
+  <Project Path="EurekaBank_CliMov_GR8.csproj" />
+</Solution>
