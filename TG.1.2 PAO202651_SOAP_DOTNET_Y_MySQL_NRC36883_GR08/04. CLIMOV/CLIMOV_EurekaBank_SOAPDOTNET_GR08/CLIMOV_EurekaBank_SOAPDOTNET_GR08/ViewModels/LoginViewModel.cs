@@ -65,7 +65,18 @@ namespace CLIMOV_EurekaBank_SOAPDOTNET_GR08.ViewModels
 
                 if (!string.IsNullOrWhiteSpace(Servidor))
                 {
-                    EurekaBankClient.BaseUrl = Servidor.Trim();
+                    string s = Servidor.Trim();
+                    if (!s.StartsWith("http://", StringComparison.OrdinalIgnoreCase) &&
+                        !s.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (s.StartsWith("://"))
+                            s = "https" + s;
+                        else if (s.Contains(".trycloudflare.com"))
+                            s = "https://" + s;
+                        else
+                            s = "http://" + s;
+                    }
+                    EurekaBankClient.BaseUrl = s.TrimEnd('/');
                 }
 
                 IsLoading = true;

@@ -10,22 +10,41 @@ namespace CLIMOV_EurekaBank_SOAPDOTNET_GR08.Services
         // Configurable Server URL for LAN multi-computer / mobile connection
         public static string BaseUrl { get; set; } = "http://localhost:62278";
 
+        private static BasicHttpBinding CreateBinding(string endpoint)
+        {
+            var binding = new BasicHttpBinding();
+            binding.MaxBufferSize = int.MaxValue;
+            binding.ReaderQuotas = System.Xml.XmlDictionaryReaderQuotas.Max;
+            binding.MaxReceivedMessageSize = int.MaxValue;
+            binding.AllowCookies = true;
+            binding.OpenTimeout = TimeSpan.FromSeconds(60);
+            binding.SendTimeout = TimeSpan.FromSeconds(60);
+            binding.ReceiveTimeout = TimeSpan.FromSeconds(60);
+
+            if (endpoint.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+            {
+                binding.Security.Mode = BasicHttpSecurityMode.Transport;
+            }
+            else
+            {
+                binding.Security.Mode = BasicHttpSecurityMode.None;
+            }
+
+            return binding;
+        }
+
         private static LoginServiceClient CreateLoginClient(string endpoint)
         {
-            var client = new LoginServiceClient(LoginServiceClient.EndpointConfiguration.BasicHttpBinding_ILoginService, endpoint);
-            client.Endpoint.Binding.OpenTimeout = TimeSpan.FromSeconds(60);
-            client.Endpoint.Binding.SendTimeout = TimeSpan.FromSeconds(60);
-            client.Endpoint.Binding.ReceiveTimeout = TimeSpan.FromSeconds(60);
-            return client;
+            var binding = CreateBinding(endpoint);
+            var address = new EndpointAddress(endpoint);
+            return new LoginServiceClient(binding, address);
         }
 
         private static MovimientosServiceClient CreateMovimientosClient(string endpoint)
         {
-            var client = new MovimientosServiceClient(MovimientosServiceClient.EndpointConfiguration.BasicHttpBinding_IMovimientosService, endpoint);
-            client.Endpoint.Binding.OpenTimeout = TimeSpan.FromSeconds(60);
-            client.Endpoint.Binding.SendTimeout = TimeSpan.FromSeconds(60);
-            client.Endpoint.Binding.ReceiveTimeout = TimeSpan.FromSeconds(60);
-            return client;
+            var binding = CreateBinding(endpoint);
+            var address = new EndpointAddress(endpoint);
+            return new MovimientosServiceClient(binding, address);
         }
 
         public async Task<bool> LoginAsync(string usuario, string clave)
